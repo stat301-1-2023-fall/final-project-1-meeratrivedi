@@ -45,6 +45,17 @@ GitHub (free account) cannot store large files. If you try to commit and push a 
 
 Blah blah blah^[where blah blah came from, an example of footnote]
 
+```{r}
+#| message: false
+#| echo: false
+library(tidyverse)
+
+friends <- read_csv("archive/friends.csv")
+friends_info <- read_csv("archive/friends_info.csv")
+friends_emotions <- read_csv("archive/friends_emotions.csv")
+```
+
+
 ## Why this data
 
 Blah blah blah^[another footnote]

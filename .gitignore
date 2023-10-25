@@ -31,6 +31,7 @@
 *.DS_Store
 
 # ignore files (likely datasets or graphics) if too large (> 100 MB)
+
 # specify pathway to dataset data/project_dataset.csv
 # if all datasets are too large then use data/*.csv (only ignores CSVs)
 # if you have other file types then use appropriate extension data/*.rds
@@ -38,4 +39,8 @@
 # to automatically find and add files over 100MB to the .gitignore you can type 
 # the following code in the Terminal:
 # find . -size +100M | sed 's|^\./||g' | cat >> .gitignore; awk '!NF || !seen[$0]++' .gitignore
+
+archive/friends.csv
+archive/friends_emotions.csv
+archive/friends_info.csv
 
