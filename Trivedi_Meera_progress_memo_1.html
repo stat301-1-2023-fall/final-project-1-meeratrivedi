@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Meera Trivedi">
-<meta name="dcterms.date" content="2023-10-25">
+<meta name="dcterms.date" content="2023-10-26">
 
 <title>Progress Memo 1</title>
 <style>
@@ -3022,7 +3022,7 @@ Data Science 1 with R (STAT 301-1)</p><p></p>
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 25, 2023</p>
+      <p class="date">October 26, 2023</p>
     </div>
   </div>
   
@@ -3075,33 +3075,28 @@ Warning
 </div>
 <section id="data-source" class="level2">
 <h2 class="anchored" data-anchor-id="data-source">Data source</h2>
-<p>Blah blah blah<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>My data will consist of three datasets all relating to the popular show Friends. These datasets are all csv files that were downloaded from Kaggle. The first dataset is called “friends.csv” and consists of six variables: text, speaker, season, episode, scene, and utterance. The text variable has 67373 observations because each observation is a line said in the show. The data for this variable contains every line ever said in all 10 seasons of the show. The speaker is who said that line, the season, episode, and scene, is what season, episode, and scene the line is from, and the utterance variable is the order of the lines per scene, so the first line has an utterance value of 1, the second line is 2, and so on until the end of scene 1. The first line of scene 2 has an utterance value of 1 again, and so on. The second data set is called “friends_emotions.csv” and contains the same season, episode, and scene variables as the previous data set but also contains an emotion variable that categorizes the emotion behind the line being said out of 7 emotion options: mad, neutral, joyful, scared, playful, powerful, and sad. However, this data set does not include the actual line the other data per row is referring to, so it is hard to make sense of the emotion variable without combining it with the previous dataset. It also only includes observations from the first episode up until season 4 episode 24. The third dataset is called “friends_info.csv” and has 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating, and this does contain every episode in all 10 seasons of Friends. I think since all of this data has season and episode variables in common it would make sense to study them together by combining them by those variables and then creating subsets of the data to perform exploratory data analysis.</p>
 </section>
 <section id="why-this-data" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-data">Why this data</h2>
-<p>Blah blah blah<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>I chose this data because I’ve watched every episode of Friends multiple times and I think the amount of observations in this data set will make for a lot of interesting relationships I could find between variables. It’s especially interesting since I have the number of US views of every single episode, which means after doing some data wrangling to create subsets of this data I could maybe see if the number of differing emotions per episode, or specific characters talking more, or number of scenes in each episode has a correlation with the number of views. I also think it would be cool to see who has the most lines in Friends out of the six main characters and maybe see who talks the most who’s not one of the six main characters. Also, there is one famous character named Janice who is known for saying “Oh My God” in most of her scenes, so I want to find the number of times she actually says that and if she’s the most frequent speaker of that line. As a fan of the show, there are a lot of different things I could do with this data.</p>
 </section>
 <section id="data-quality-complexity-check" class="level2">
 <h2 class="anchored" data-anchor-id="data-quality-complexity-check">Data quality &amp; complexity check</h2>
-<p>Blah blah blah</p>
+<p>In my first dataset there are 67373 observations corresponding to details of every line in the show, including stage directions. This variable text and speaker are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables are numbers that correspond to categories, like season, episode and scene so I could potentially use pivoting functions to reorganize the dataset to make them categories instead of numbers. Utterance is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because sometimes lines are heard from off-screen or by unnamed characters and it’s hard to tell who said them.</p>
+<p>In my second dataset there are 12606 observations corresponding to lines from the first episode until Season 4 Episode 24, including stage directions. There are 5 variables, 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable.</p>
+<p>In my third dataset there are 236 observations corresponding to every episode of the show and there are 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating. The season and episode variables are the same as the previous datasets, and the rest of the variables are categorical except for the views and the imdb rating, which are numerical. There are no missing values for any variable.</p>
 </section>
 <section id="potential-data-issues" class="level2">
 <h2 class="anchored" data-anchor-id="potential-data-issues">Potential data issues</h2>
-<p>Blah blah blah</p>
+<p>Since I have three datasets that need to be studied I need to merge them, which seems very possible because there are two variables that are the same in each dataset: season and episode. However, two datasets have many observations per unique value of season and episode whereas the friends_info dataset only has one observation corresponding to each unique value of season and episode. This might make it difficult to merge all three together, but I’m sure it’s still possible, I just might have the same observations listed out many times in a big dataset that I could then reorganize, which would take extra time and data wrangling. However, I don’t have to deal with many missing values and the ones I do have will be pretty easy to filter out because the random lines we can’t distinguish speakers for most likely aren’t that relevant to the show anyway.</p>
 </section>
 <section id="misc" class="level2">
 <h2 class="anchored" data-anchor-id="misc">Misc</h2>
-<p>Blah Blah</p>
+<p>The main thing I want to do is answer some of the questions I personally have been wondering since I came across this dataset, like which character speaks the most, which guest character is in the most episodes, how many times does Janice really say “Oh My God” compared to the other characters, and which variables contribute to higher imdb ratings and views. So, I do have a plan to find relationships of the success of the episodes, but I also just want to discover some fun things I’m curious about as a fan.</p>
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>where blah blah came from, an example of footnote<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>another footnote<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main>
+</main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
