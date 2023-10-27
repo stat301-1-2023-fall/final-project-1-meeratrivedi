@@ -4,7 +4,6 @@ subtitle: |
   | Final Project 
   | Data Science 1 with R (STAT 301-1)
 author: "Meera Trivedi"
-date: today
 
 format:
   html:
@@ -18,15 +17,6 @@ execute:
 from: markdown+emoji 
 ---
 
-::: {.callout-important}
-## Memo format
-
-Like all other submissions for this course, we expect the memo to be neat and well organized.
-
-You should make this document your own. This is a template. To help with this we have added a date to the yaml above (good whenever writing memos). You should remove this block when making this document your own.
-
-:::
-
 ::: {.callout-tip icon=false}
 
 ## Github Repo Link
@@ -35,15 +25,18 @@ You should make this document your own. This is a template. To help with this we
 
 :::
 
-::: {.callout-warning}
-GitHub (free account) cannot store large files. If you try to commit and push a large dataset you will have an ERROR! Any file over 100 MB (100,000 KB) needs to be added to the `.gitignore` file BEFORE committing.
-
-**We may need to do that for files in your final project!**
-:::
-
 ## Data source
 
 My data will consist of three datasets all relating to the popular show Friends. These datasets are all csv files that were downloaded from Kaggle. The first dataset is called “friends.csv” and consists of six variables: text, speaker, season, episode, scene, and utterance. The text variable has 67373 observations because each observation is a line said in the show. The data for this variable contains every line ever said in all 10 seasons of the show. The speaker is who said that line, the season, episode, and scene, is what season, episode, and scene the line is from, and the utterance variable is the order of the lines per scene, so the first line has an utterance value of 1, the second line is 2, and so on until the end of scene 1. The first line of scene 2 has an utterance value of 1 again, and so on. The second data set is called “friends_emotions.csv” and contains the same season, episode, and scene variables as the previous data set but also contains an emotion variable that categorizes the emotion behind the line being said out of 7 emotion options: mad, neutral, joyful, scared, playful, powerful, and sad. However, this data set does not include the actual line the other data per row is referring to, so it is hard to make sense of the emotion variable without combining it with the previous dataset. It also only includes observations from the first episode up until season 4 episode 24. The third dataset is called “friends_info.csv” and has 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating, and this does contain every episode in all 10 seasons of Friends. I think since all of this data has season and episode variables in common it would make sense to study them together by combining them by those variables and then creating subsets of the data to perform exploratory data analysis. 
+
+::: {.callout-tip icon=false}
+
+## Data Links
+
+[https://www.kaggle.com/datasets/sujaykapadnis/friends/](https://www.kaggle.com/datasets/sujaykapadnis/friends/)
+
+:::
+
 
 
 ## Why this data
