@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -3061,6 +3095,13 @@ Data Links
 </section>
 <section id="data-quality-complexity-check" class="level2">
 <h2 class="anchored" data-anchor-id="data-quality-complexity-check">Data quality &amp; complexity check</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/friends.csv&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/friends_info.csv&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>emotions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/friends_emotions.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>In my first dataset there are 67373 observations corresponding to details of every line in the show, including stage directions. This variable text and speaker are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables are numbers that correspond to categories, like season, episode and scene so I could potentially use pivoting functions to reorganize the dataset to make them categories instead of numbers. Utterance is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because sometimes lines are heard from off-screen or by unnamed characters and it’s hard to tell who said them.</p>
 <p>In my second dataset there are 12606 observations corresponding to lines from the first episode until Season 4 Episode 24, including stage directions. There are 5 variables, 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable.</p>
 <p>In my third dataset there are 236 observations corresponding to every episode of the show and there are 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating. The season and episode variables are the same as the previous datasets, and the rest of the variables are categorical except for the views and the imdb rating, which are numerical. There are no missing values for any variable.</p>

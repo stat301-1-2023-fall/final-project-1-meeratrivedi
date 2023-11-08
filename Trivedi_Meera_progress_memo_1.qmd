@@ -11,7 +11,6 @@ format:
     embed-resources: true
     
 execute:
-  echo: false
   warning: false
 
 from: markdown+emoji 
@@ -50,10 +49,11 @@ I chose this data because I’ve watched every episode of Friends multiple times
 #| message: false
 library(tidyverse)
 
-friends <- read_csv("archive/friends.csv")
-friends_info <- read_csv("archive/friends_info.csv")
-friends_emotions <- read_csv("archive/friends_emotions.csv")
+lines <- read_csv("data/friends.csv")
+info <- read_csv("data/friends_info.csv")
+emotions <- read_csv("data/friends_emotions.csv")
 ```
+
 In my first dataset there are 67373 observations corresponding to details of every line in the show, including stage directions. This variable text and speaker are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables are numbers that correspond to categories, like season, episode and scene so I could potentially use pivoting functions to reorganize the dataset to make them categories instead of numbers. Utterance is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because sometimes lines are heard from off-screen or by unnamed characters and it’s hard to tell who said them. 
 
 In my second dataset there are 12606 observations corresponding to lines from the first episode until Season 4 Episode 24, including stage directions. There are 5 variables, 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable.
