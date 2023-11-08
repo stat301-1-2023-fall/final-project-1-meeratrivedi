@@ -1,5 +1,6 @@
 ## DATA SUBSETS
 
+library(tidyverse)
 
 #joining lines and emotions
 
@@ -21,15 +22,27 @@ maincharacters <- lines |>
                         "Joey Tribbiani", 
                         "Chandler Bing"))
 
-ggplot(maincharacters, aes(x = speaker)) +
-  geom_bar()
+
+guestcharacters <- lines |> 
+  filter(!speaker %in% c("Monica Geller", 
+                         "Ross Geller", 
+                         "Rachel Green", 
+                         "Phoebe Buffay", 
+                         "Joey Tribbiani", 
+                         "Chandler Bing", 
+                         "Scene Directions", 
+                         "#ALL#")) |> 
+  filter(!is.na(speaker))
+
+read_csv(file = "data/friends.csv", 
+         col_types = cols(grade = col_integer(), 
+                          student = col_character()))
 
 
-monica |> 
-  group_by(season) |> 
+topguestcharacters <- guestcharacters |> 
+  group_by(speaker) |> 
   count(speaker) |> 
-  ggplot(aes(x = season, y = n)) + 
-  geom_point(size = 3)+
-  geom_line()+
-  scale_x_continuous(breaks = seq(0, 10, 1))
-
+  rename(lines = n) |> 
+  filter(lines > 10) |> 
+  mutate(lines = as.double(lines)) |> 
+  arrange(desc(lines))
