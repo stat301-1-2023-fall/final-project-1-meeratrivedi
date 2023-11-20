@@ -65,10 +65,39 @@ lines |>
   full_join(info)
 
 #how many episodes did each write
-info |> 
+writers <- info |> 
   count(written_by) |>
   filter(n > 1) |> 
   arrange(desc(n)) |> 
   rename(episodes_written = n) |> 
   slice_max(episodes_written, n = 10)
 
+writers
+
+topwriters <- info |> 
+  filter(written_by %in% writers)
+
+#guest lines distribution
+topguestlines <- lines |> 
+  filter(speaker %in% c("Mike Hannigan", 
+                        "Richard Burke", 
+                        "Janice Litman Goralnik", 
+                        "Carol Willick", 
+                        "Charlie Wheeler", 
+                        "Judy Geller", 
+                        "Frank Buffay Jr.", 
+                        "Emily Waltham", 
+                        "Jack Geller", 
+                        "Tag Jones")) |> 
+  mutate(speaker = factor(speaker, 
+                          #order of levels
+                          levels = c("Mike Hannigan", 
+                                     "Richard Burke", 
+                                     "Janice Litman Goralnik", 
+                                     "Carol Willick", 
+                                     "Charlie Wheeler", 
+                                     "Judy Geller", 
+                                     "Frank Buffay Jr.", 
+                                     "Emily Waltham", 
+                                     "Jack Geller", 
+                                     "Tag Jones")))
