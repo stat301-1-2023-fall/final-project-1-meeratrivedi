@@ -30,26 +30,14 @@ from: markdown+emoji
 
 library(tidyverse)
 
-lines <- read_csv("data/friends.csv")
-info <- read_csv("data/friends_info.csv")
-emotions <- read_csv("data/friends_emotions.csv")
+lines <- read_csv("data/raw/friends.csv")
+info <- read_csv("data/raw/friends_info.csv")
+emotions <- read_csv("data/raw/friends_emotions.csv")
 ```
 
-## Investigating the Data
+## Introduction
 
 explanation
-
-```{r}
-glimpse(lines)
-```
-
-```{r}
-glimpse(info)
-```
-
-```{r}
-glimpse(emotions)
-```
 
 ## Data Cleaning
 
@@ -58,34 +46,32 @@ glimpse(emotions)
 explanation
 
 ```{r}
-lines_emotions <- lines |> 
-  filter(speaker != "Scene Directions") |> 
-  left_join(emotions)
-```
+#| message: false
+lines_info <- 
+  lines |> 
+  full_join(info) |> 
+  select(!text)
 
-```{r}
-linesinfo <- 
-lines |> 
-  full_join(info)
+lines_info_emotions <- lines_info |> 
+  full_join(emotions) |> 
+  filter(!is.na(emotion)) |> 
+  rename(episode_air_date = air_date, 
+         episode_us_views_millions = us_views_millions, 
+         episode_imdb_rating = imdb_rating, 
+         writers = written_by,
+         directors = directed_by,
+         line_emotion = emotion) |> 
+  relocate(title, directors, writers, season, episode, scene, utterance, speaker, line_emotion, episode_air_date, episode_us_views_millions, episode_imdb_rating)
+
+write_rds(lines_info_emotions, file = "data/new/lines_info_emotions.rda")
+
+lines_info_emotions |> 
+  slice_head(n = 10) |> 
+  knitr::kable()
 ```
 
 
 ### Subsetting Data
-```{r}
-monica <- lines |> 
-  filter(speaker == "Monica Geller") 
-```
-
-
-```{r}
-maincharacters <- lines |> 
-  filter(speaker %in% c("Monica Geller", 
-                        "Ross Geller", 
-                        "Rachel Green", 
-                        "Phoebe Buffay", 
-                        "Joey Tribbiani", 
-                        "Chandler Bing"))
-```
 
 ```{r}
 guestcharacters <- lines |> 
@@ -98,15 +84,17 @@ guestcharacters <- lines |>
                          "Scene Directions", 
                          "#ALL#")) |> 
   filter(!is.na(speaker))
-```
 
-```{r}
 topguestcharacters <- guestcharacters |> 
   group_by(speaker) |> 
   count(speaker) |> 
   filter(n > 10) |> 
   arrange(desc(n)) |> 
   rename(num_lines = n)
+  
+top10 <- head(topguestcharacters, n=10)
+
+top10
 ```
 
 ```{r}
@@ -115,33 +103,20 @@ writers <- info |>
   filter(n > 1) |> 
   arrange(desc(n)) |> 
   rename(episodes_written = n) |> 
-  slice_max(episodes_written, n = 10)
+  slice_max(episodes_written, n = 11)
+
+writers
 ```
 
 ```{r}
 topguestlines <- lines |> 
-  filter(speaker %in% c("Mike Hannigan", 
-                        "Richard Burke", 
-                        "Janice Litman Goralnik", 
-                        "Carol Willick", 
-                        "Charlie Wheeler", 
-                        "Judy Geller", 
-                        "Frank Buffay Jr.", 
-                        "Emily Waltham", 
-                        "Jack Geller", 
-                        "Tag Jones")) |> 
+  filter(speaker %in% top10$speaker) |> 
   mutate(speaker = factor(speaker, 
                           #order of levels
-                          levels = c("Mike Hannigan", 
-                                     "Richard Burke", 
-                                     "Janice Litman Goralnik", 
-                                     "Carol Willick", 
-                                     "Charlie Wheeler", 
-                                     "Judy Geller", 
-                                     "Frank Buffay Jr.", 
-                                     "Emily Waltham", 
-                                     "Jack Geller", 
-                                     "Tag Jones")))
+                          levels = top10$speaker)) |> 
+  relocate(speaker, season, episode, scene, utterance, text)
+
+topguestlines
 ```
 
 

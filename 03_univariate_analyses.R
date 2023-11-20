@@ -53,6 +53,8 @@ monica |>
 ggsave("plots/line_by_season_monica.png") 
 
 
+
+
 #guest lines--------
 guest_labels <- topguestlines |> 
   count(speaker)
