@@ -167,87 +167,33 @@ info |>
 
 ## Univariate Analyses
 
-explanation
+@fig-bar1 first shows us the distribution of the number of ... 
 
-```{r}
-#main characters line count
-labels <- maincharacters |> 
-  count(speaker)
+![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
 
-ggplot(maincharacters, aes(x = speaker, fill = speaker)) +
-  geom_bar(show.legend = FALSE) + 
-  geom_text(data = labels, 
-            aes(y = n, label = n), 
-            nudge_y = -50, vjust = "top") + 
-  scale_fill_manual(name = NULL, 
-                    values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E"))+ 
-  theme_minimal()
-```
-```{r}
-monica |> 
-  group_by(season) |> 
-  count(speaker) |> 
-  ggplot(aes(x = season, y = n)) + 
-  geom_point(size = 3)+
-  geom_line()+
-  scale_x_continuous(breaks = seq(0, 10, 1))
-```
-```{r}
-topguestlines |> 
-  ggplot(aes(x = speaker, fill = speaker))+
-  geom_bar(show.legend = FALSE)+
-  scale_x_discrete(name = NULL, 
-                   labels = c("Mike \n Hannigan", 
-                              "Richard \n Burke", 
-                              "Janice \n Litman \n Goralnik", 
-                              "Carol \n Willick", 
-                              "Charlie \n Wheeler", 
-                              "Judy \n Geller", 
-                              "Frank \n Buffay \n Jr.", 
-                              "Emily \n Waltham", 
-                              "Jack \n Geller", 
-                              "Tag \n Jones")) +
-  theme_minimal()
-```
-```{r}
-label_numbers <- lines_emotions |> 
-  count(emotion) |> 
-  filter(!is.na(emotion))
+@fig-bar2 first shows us the distribution of the number of ... 
 
-lines_emotions |> 
-  count(emotion) |> 
-  filter(!is.na(emotion)) |> 
-  ggplot(aes(x = emotion, y = n, fill = emotion)) +
-  geom_col(show.legend = FALSE)+
-  geom_text(data = label_numbers, 
-            aes(y = n, label = n), 
-            color = "white",
-            size = 5,
-            nudge_y = -25, vjust = "top")+
-  scale_fill_manual(name = NULL, 
-                    values = c("mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise"))+
-  theme_minimal()
-```
+![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
+
+
+
+@fig-plot1 first shows us the distribution of the number of ... 
+
+![Line Count - Monica Geller](plots/line_by_season_monica.png){#fig-plot1}
+
+@fig-bar3 first shows us the distribution of the number of ... 
+
+![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
 ## Multivariate Analyses
 
 explanation
 
-```{r}
-#main character lines throughout the seasons
-maincharacters |> 
-  group_by(season) |> 
-  count(speaker) |> 
-  ggplot(aes(x = season, y = n, color = speaker))+
-  geom_point(size = 3, show.legend = FALSE)+
-  geom_line(show.legend = FALSE)+
-  scale_x_continuous(breaks = seq(0, 10, 1))+
-  facet_wrap(~speaker)
-```
-```{r}
-ggplot(data = info, aes(us_views_millions, imdb_rating))+
-  geom_jitter(alpha = 0.75)
-```
+@fig-plot2 first shows us the distribution of the number of ... 
+
+![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
+
+
 
 ## Summary of Progress
 
