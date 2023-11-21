@@ -23,7 +23,12 @@ maincharacters |>
 
 ggsave("plots/line_by_season_maincharacters.png") 
 
+
+## Emotions Analyses ------
+
+
 ## Info Analyses ------
+
 #views and ratings
 ggplot(data = info, aes(us_views_millions, imdb_rating))+
   geom_jitter(alpha = 0.75)

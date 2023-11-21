@@ -20,6 +20,23 @@ info |>
   summarize(mean = mean(imdb_rating), 
             .by = season)
 
+info |> 
+  summarize(mean = mean(imdb_rating),
+            mean1 = mean(us_views_millions),
+            .by = season) |> 
+  gt() |> 
+  tab_header(title = md("**Season Statistics**")) |> 
+  cols_label(season = md("Season"), 
+             mean = md("Average IMDB Rating"), 
+             mean1 = md("Average US Views")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = mean, 
+    decimals = 2) |> 
+  fmt_number(
+    columns = mean1, 
+    decimals = 2)
+
 #episodes per season
 
 
@@ -46,4 +63,14 @@ writers_episodes <- info |>
   arrange(desc(num_episodes))
 
 writers_episodes <- head(writers_episodes, n = 10)
+
+
+
+writers_episodes |> 
+  full_join(writers_lines) |> 
+  gt() |> 
+  tab_header(title = md("**Total Lines & Episodes Per Writer**")) |> 
+  cols_label(written_by = md("Writer(s)"), 
+             num_episodes = md("Number of Episodes Written"), 
+             num_lines = md("Number of Lines Written"))
 
