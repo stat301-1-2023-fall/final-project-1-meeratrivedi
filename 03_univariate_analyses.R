@@ -55,7 +55,8 @@ ggsave("plots/line_by_season_monica.png")
 
 
 
-#guest lines--------
+#guest lines-------
+
 guest_labels <- topguestlines |> 
   count(speaker)
 
@@ -85,12 +86,6 @@ topguestlines |>
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"))
 
 ggsave("plots/line_dist_guestcharacters.png") 
-
-
-
-
-
-
 
 
 
@@ -129,8 +124,40 @@ ggsave("plots/emotions_count.png")
 
 
 
+
 ## Info Analyses ------
 
-writers |> 
-  ggplot(aes(x = written_by, fill = written_by))+
-  geom_bar(show.legend = FALSE)
+#top writers----
+
+writer_labels <- topwriters |> 
+  count(written_by)
+
+
+
+topwriters |> 
+  ggplot(aes(x = written_by, fill = written_by)) +
+  geom_bar(show.legend = FALSE) + 
+  geom_text(data = writer_labels,
+            aes(y = n, label = n), 
+            nudge_y = -0.25, vjust = "top") + 
+  scale_x_discrete(name = NULL, 
+                   labels = c("Alexa \n Junge", 
+                              "Andrew \n Reich \n & Ted \n Cohen", 
+                              "David \n Crane & \n Marta \n Kauffman",
+                              "Doty \n Abrams", 
+                              "Seth \n Kurland", 
+                              "Shana \n Goldberg-\n Meehan", 
+                              "Scott \n Silveri", 
+                              "Sherry \n Bilsing-\n Graham \n & Ellen \n Plummer", 
+                              "Wil \n Calhoun", 
+                              "Adam \n Chase", 
+                              "Jeffrey \n Astrof \n & Mike \n Sikowitz")) +
+  labs(title = "Episode Writers", 
+       subtitle = "Total Number of Episodes Written by the 11 Most Recurring Writers", 
+       x = "Character", y = NULL) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+ggsave("plots/info_dist_topwriters.png") 

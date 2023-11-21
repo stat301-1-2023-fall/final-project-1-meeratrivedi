@@ -23,148 +23,156 @@ from: markdown+emoji
 [My GitHub Repo](https://github.com/stat301-1-2023-fall/final-project-1-meeratrivedi.git)
 :::
 
-## Data and Packages
 
 ```{r}
 #| message: false
+#| results: hide
 
 library(tidyverse)
+library(gt)
 
-lines <- read_csv("data/raw/friends.csv")
+lines_raw <- read_csv("data/raw/friends.csv")
 info <- read_csv("data/raw/friends_info.csv")
 emotions <- read_csv("data/raw/friends_emotions.csv")
+lines_info_emotions <- read_csv("data/lines_info_emotions.csv")
+lines_emotions <- read_csv("data/lines_emotions.csv")
+maincharacters <- read_csv("data/maincharacters.csv")
+guestcharacters <- read_csv("data/guestcharacters.csv")
+lines_info <- read_csv("data/lines_info.csv")
+lines <- read_csv("data/lines.csv")
+topguestlines <- read_csv("data/topguestlines.csv")
 ```
 
 ## Introduction
 
-explanation
+This Exploratory Data Analysis will explore various data relating to the popular 90’s show Friends. I chose this data because I’ve watched every episode of Friends multiple times and I think the amount of observations in this data set will make for a lot of interesting relationships I could find between variables. The data consists of three datasets that I will be joining together and using individually to explore various types of data relating to the show, including the script details and numerical data about each episode. The first dataset is about the lines of every script, the second is about the emotions each line is delivered with, and the third includes identifying information about each episode and statistics about the success of each episode. The primary motivation for choosing this data and each analysis I’ve created is the curiosities I have had as a fan. The main thing I want to do is answer some of the questions I personally have been wondering since I came across this dataset, like which main character speaks the most, which guest character appears the most, did David Crane and Marta Kauffman write all the episodes, how many times does Janice really say “Oh My God” compared to the other characters, and which variables contribute to higher imdb ratings and views. It’s especially interesting since I have the number of US views of every single episode, which means after doing some data wrangling to create subsets of this data I could maybe see if the variables in my other two datasets have a correlation with the number of views. Then maybe I could say something about the contributors to the success of the show. As a fan of the show, there are a lot of different things I could do with this data. So, I do have a plan to find relationships of the success of the episodes, but I also just want to discover some fun things I’m curious about as a fan. 
+
+## Data Overview & Quality
+
+In my first dataset there are 67373 observations corresponding to details of every line in the show, including scene directions. This text variable and the speaker variable are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables have numerical values that correspond to categories, like season, episode and scene so I could potentially use pivoting functions to reorganize the dataset to make them categories instead of numbers. This hasn’t been relevant to my univariate analyses so far though. The utterance variable is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because some lines are heard from off-screen or by unnamed characters .
+
+In my second dataset there are 12606 observations corresponding to lines from scene 4 of the first episode until Season 4 Episode 24, including scene directions. There are 5 variables: 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable in this dataset, but since this data only encompasses part of the show and the other two datasets encompass the entire show, there are many missing values for emotion when joined. 
+
+In my third dataset there are 236 observations corresponding to every episode of the show and there are 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating. The season and episode variables are the same as the previous datasets, and the rest of the variables are categorical except for the views and the imdb rating, which are numerical. There are no missing values for any variable.
+
 
 ## Data Cleaning
 
 ### Joining Datasets
 
-explanation
+I started out with three datasets with some overlapping variables that could act as compound keys to join the datasets. I called each dataset "lines", "emotions" and "info" respectively and will use those names to refer to them for the rest of this report. I first cleaned the lines dataset by removing the lines with missing values for "speaker" since those lines will not be relevant to my analyses. I then made multiple joined datasets: one joining lines and emotions, one joining lines and info, and one joining all three. I also made subsets of the lines dataset that I will be using in my analyses: one only including the six main characters and one including every character but them. Since I will be analyzing the main and side characters separately, this was necessary. All of these cleaned datasets are stored in the data sub-directory as csv files, and shown here is the first 10 rows of all three datasets combined together as an example:  
 
 ```{r}
 #| message: false
-lines_info <- 
-  lines |> 
-  full_join(info) |> 
-  select(!text)
+triplejoindisplay <- head(lines_info_emotions, n=10) 
 
-lines_info_emotions <- lines_info |> 
-  full_join(emotions) |> 
-  filter(!is.na(emotion)) |> 
-  rename(episode_air_date = air_date, 
-         episode_us_views_millions = us_views_millions, 
-         episode_imdb_rating = imdb_rating, 
+triplejoindisplay |>
+  select(!text) |> 
+  rename(us_views_mil = us_views_millions, 
+         imdb = imdb_rating, 
          writers = written_by,
-         directors = directed_by,
-         line_emotion = emotion) |> 
-  relocate(title, directors, writers, season, episode, scene, utterance, speaker, line_emotion, episode_air_date, episode_us_views_millions, episode_imdb_rating)
-
-write_rds(lines_info_emotions, file = "data/new/lines_info_emotions.rda")
-
-lines_info_emotions |> 
-  slice_head(n = 10) |> 
-  knitr::kable()
-```
-
-
-### Subsetting Data
-
-```{r}
-guestcharacters <- lines |> 
-  filter(!speaker %in% c("Monica Geller", 
-                         "Ross Geller", 
-                         "Rachel Green", 
-                         "Phoebe Buffay", 
-                         "Joey Tribbiani", 
-                         "Chandler Bing", 
-                         "Scene Directions", 
-                         "#ALL#")) |> 
-  filter(!is.na(speaker))
-
-topguestcharacters <- guestcharacters |> 
-  group_by(speaker) |> 
-  count(speaker) |> 
-  filter(n > 10) |> 
-  arrange(desc(n)) |> 
-  rename(num_lines = n)
-  
-top10 <- head(topguestcharacters, n=10)
-
-top10
-```
-
-```{r}
-writers <- info |> 
-  count(written_by) |>
-  filter(n > 1) |> 
-  arrange(desc(n)) |> 
-  rename(episodes_written = n) |> 
-  slice_max(episodes_written, n = 11)
-
-writers
-```
-
-```{r}
-topguestlines <- lines |> 
-  filter(speaker %in% top10$speaker) |> 
-  mutate(speaker = factor(speaker, 
-                          #order of levels
-                          levels = top10$speaker)) |> 
-  relocate(speaker, season, episode, scene, utterance, text)
-
-topguestlines
+         directors = directed_by) |> 
+  relocate(title, directors, writers, season, episode, scene, utterance, speaker, air_date, us_views_mil, imdb) |> 
+  gt() |> 
+  tab_header(title = md("**Friends Data**")) |> 
+  tab_source_note(source_note = md("The text variable was removed from this display for visual purposes but remains in the dataset."))
 ```
 
 
 
 ## Summary Statistics
 
-explanation
+#### IMDB and Views
+
+To begin my analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
 
 ```{r}
 info |> 
-  summarize(mean = mean(imdb_rating), 
-            .by = season) |>
-  knitr::kable()
-```
-
-
-```{r}
-info |> 
-  summarize(mean = mean(us_views_millions), 
+  summarize(mean = mean(imdb_rating),
+            mean1 = mean(us_views_millions),
             .by = season) |> 
-  knitr::kable()
+  gt() |> 
+  tab_header(title = md("**Season Statistics**")) |> 
+  cols_label(season = md("Season"), 
+           mean = md("Average IMDB Rating"), 
+           mean1 = md("Average US Views")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = mean, 
+    decimals = 2) |> 
+  fmt_number(
+    columns = mean1, 
+    decimals = 2)
 ```
+
+#### Writers: Lines and Episodes
+
+Next I explored the writers. Since David Crane & Marta Kauffman's names appear on the screen at the end of every episode, I thought they wrote every episode, but I was so wrong! I didn't realize how many people have written episodes for this show, but here I have displayed the top 9 writers, in terms of episodes and lines. I wanted to see if the people who wrote the most episodes also wrote the most lines for the show, and surprisingly, it was different. Alexa Junge and Andre Reich & Ted Cohen actually wrote the most episodes but Andrew Reich & Ted Cohen wrote the most lines. Perhaps the number of lines in the episodes they wrote was more than the number of lines in the episodes Junge wrote. But she wrote two more episodes, meaning they must have been shorter or included more action than lines, or some other reason. 
+
+```{r}
+#| message: false
+writers_lines <- lines_info |> 
+  count(written_by) |> 
+  rename(num_lines = n) |> 
+  arrange(desc(num_lines))
+
+writers_lines <- head(writers_lines, n=10)
+
+writers_episodes <- info |> 
+  count(written_by) |> 
+  rename(num_episodes = n) |> 
+  arrange(desc(num_episodes))
+
+writers_episodes <- head(writers_episodes, n = 10)
+
+writers_episodes |> 
+  full_join(writers_lines) |> 
+  gt() |> 
+  tab_header(title = md("**Total Lines & Episodes Per Writer**")) |> 
+  cols_label(written_by = md("Writer(s)"), 
+           num_episodes = md("Number of Episodes Written"), 
+           num_lines = md("Number of Lines Written"))
+```
+
 
 ## Univariate Analyses
 
-@fig-bar1 first shows us the distribution of the number of ... 
+#### The Main Characters
+
+
+@fig-bar1 answers my biggest question: Who has the most lines? David Crane & Marta Kauffman as well as the stars of the show have always said in interviews that the show was designed to have the six of them be an ensemble: six equal co-stars with no lead. However, someone has to have the most lines. This bar graph shows us the number of lines each of the six main characters had throughout the show, and as you can see, Rachel Green had the most lines, and almost 200 more than Phoebe Buffay, who had the least number of lines. This doesn't make her the lead, but it is interesting.
 
 ![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
 
-@fig-bar2 first shows us the distribution of the number of ... 
+#### The Guest Characters
+
+@fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on Friends, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six Friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had. 
 
 ![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
 
+#### Lines - Monica
 
-
-@fig-plot1 first shows us the distribution of the number of ... 
+Next I wanted to understand how the number of lines changed throughout the show so I began by exploring that for my favorite character: Monica Geller. @fig-plot1 shows the number of lines she had in every season. It varied quite a lot, peaking at Season 5 and remarkably dropping at Season 10. This is not surprising because Season 5 is when her and Chandler's love storyline begins which takes up a lot of the plot for that period of time. Also, Season 10 had less episodes than the other seasons, so it makes sense that she had much fewer lines. However, perhaps other characters just had more?
 
 ![Line Count - Monica Geller](plots/line_by_season_monica.png){#fig-plot1}
 
-@fig-bar3 first shows us the distribution of the number of ... 
+#### Emotions
+
+@fig-bar3 next explores the emotions of the lines delivered on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of Friends is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.  
 
 ![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
+#### Writers
+
+@fig-bar4 next explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that are many writers who only wrote 1 or a few episodes. 
+
+![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
+
 ## Multivariate Analyses
 
-explanation
+#### Lines - Main Characters
 
-@fig-plot2 first shows us the distribution of the number of ... 
+To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I played earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
 
 ![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
 
@@ -172,5 +180,16 @@ explanation
 
 ## Summary of Progress
 
-explanation
+progress
+
+
+## Reference
+
+::: {.callout-tip icon=false}
+
+## Data Link
+
+[https://www.kaggle.com/datasets/sujaykapadnis/friends/](https://www.kaggle.com/datasets/sujaykapadnis/friends/)
+
+:::
 
