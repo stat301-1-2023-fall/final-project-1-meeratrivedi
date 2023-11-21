@@ -22,7 +22,7 @@ lines_emotions <- lines |>
 
 lines_emotions
 
-write_rds(lines_emotions, file = "data/new/lines_emotions.rda")
+write_rds(lines_emotions, file = "data/lines_emotions.rda")
 
 
 
@@ -61,7 +61,7 @@ guestcharacters <- lines |>
                          "#ALL#")) |> 
   filter(!is.na(speaker))
 
-write_rds(guestcharacters, file = "data/new/guestcharacters.rda")
+write_rds(guestcharacters, file = "data/guestcharacters.rda")
 
 
 
@@ -87,7 +87,7 @@ lines_info <-
 
 lines_info
 
-write_rds(lines_info, file = "data/new/lines_info.rda")
+write_rds(lines_info, file = "data/lines_info.rda")
 
 
 
@@ -106,7 +106,7 @@ lines_info_emotions <- lines_info |>
 
 lines_info_emotions
 
-write_rds(lines_info, file = "data/new/lines_info_emotions.rda")
+write_rds(lines_info, file = "data/lines_info_emotions.rda")
 
 
 
