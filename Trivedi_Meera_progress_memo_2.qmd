@@ -116,14 +116,14 @@ writers_lines <- lines_info |>
   rename(num_lines = n) |> 
   arrange(desc(num_lines))
 
-writers_lines <- head(writers_lines, n=10)
+writers_lines <- head(writers_lines, n=9)
 
 writers_episodes <- info |> 
   count(written_by) |> 
   rename(num_episodes = n) |> 
   arrange(desc(num_episodes))
 
-writers_episodes <- head(writers_episodes, n = 10)
+writers_episodes <- head(writers_episodes, n = 9)
 
 writers_episodes |> 
   full_join(writers_lines) |> 
@@ -164,7 +164,7 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 #### Writers
 
-@fig-bar4 next explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that are many writers who only wrote 1 or a few episodes. 
+@fig-bar4 next explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes. 
 
 ![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
 
@@ -172,7 +172,7 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 #### Lines - Main Characters
 
-To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I played earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
+To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I made earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
 
 ![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
 
@@ -180,7 +180,8 @@ To build on the previous analysis of Monica's lines, @fig-plot2 shows us the cha
 
 ## Summary of Progress
 
-progress
+So far, I have done all the univariate analyses I plan to do, but I may do more depending on what multivariate analyses I decide to do. I've organized this progress memo in a way that showcases the progress I've made in each category of analysis, but for the final report I may re-organize in a way that shows the analyses that more closely correspond to each other together. For example: I will probably put the two scatterplots I have made together since they relate to each other. Next I need to complete the multivariate analyses, and have multiple pertaining to data from each of the individual datasets. Right now I have only examined the lines, and going forward I want to examine relationships between the many other variables I have in my joined datasets. I am sure as multivariate analyses begin to form, relevant summary statistics will as well, so I will then make more data tables displaying those. I believe I have succeeded thus far at making all my analyses visually appealing, but the things I will work on for the final project are ordering them in a way that relates them to each other and exploring them through different varieties of distributions. Bargraphs have made the most sense for each analyses so far since I have mostly been showing count, but I want to use varying geom layers and find new summary statistics. I have discovered so many interesting things about this show so far and I will work to ensure my multivariate analyses not only explore more, but tie the work I've done so far together. My next step will be to work on relationships between my numerical data, probably in scatterplot form, and then go from there.
+I also do need to create codebooks for my data and create a READ.me file for my plots folder. 
 
 
 ## Reference
