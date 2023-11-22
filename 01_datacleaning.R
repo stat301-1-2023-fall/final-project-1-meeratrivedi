@@ -121,13 +121,14 @@ write_csv(lines_info, file = "data/lines_info_emotions.csv")
 
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 
+
 triplejoindisplay |>
   select(!text) |> 
   rename(us_views_mil = us_views_millions, 
          imdb = imdb_rating, 
          writers = written_by,
          directors = directed_by) |> 
-  relocate(title, directors, writers, season, episode, scene, utterance, speaker, air_date, us_views_mil, imdb) |> 
+  relocate(title, directors, writers, season, episode, scene, utterance, speaker, emotion, air_date, us_views_mil, imdb) |> 
   gt() |> 
   tab_header(title = md("**Friends Data**")) |> 
   tab_source_note(source_note = md("The text variable was removed from this display for visual purposes but remains in the dataset."))
