@@ -74,3 +74,22 @@ writers_episodes |>
              num_episodes = md("Number of Episodes Written"), 
              num_lines = md("Number of Lines Written"))
 
+
+##emotions and views and ratings
+lines_info_emotions |> 
+  group_by(emotion) |> 
+  summarize(avg_views = mean(us_views_millions, na.rm = TRUE), 
+            avg_imdb = mean(imdb_rating, na.rm = TRUE), 
+            n = n())
+
+#top 5 episodes by views
+info |> 
+  select(season, episode, title, us_views_millions) |> 
+  slice_max(us_views_millions, n = 5)
+
+#top 5 episodes by rating
+info |> 
+  select(season, episode, title, imdb_rating) |> 
+  slice_max(imdb_rating, n = 5)
+
+

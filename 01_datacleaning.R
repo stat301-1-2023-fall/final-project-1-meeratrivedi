@@ -146,6 +146,14 @@ writers <- info |>
 
 writers
 
+directors <- info |> 
+  count(directed_by) |>
+  filter(n > 1) |> 
+  arrange(desc(n)) |> 
+  rename(episodes_directed = n) |> 
+  slice_max(episodes_directed, n = 3)
+
+directors
 
 #guest lines distribution -----
 topguestlines <- lines |> 
@@ -165,6 +173,14 @@ topwriters <- info |>
                           levels = writers$written_by))
 
 topwriters
+
+topdirectors <- info |> 
+  filter(directed_by %in% directors$directed_by) |> 
+  mutate(directed_by = factor(directed_by, 
+                             #order of levels
+                             levels = directors$directed_by))
+
+topdirectors
 
 
 
