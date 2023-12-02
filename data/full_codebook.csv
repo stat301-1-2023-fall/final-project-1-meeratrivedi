@@ -1,0 +1,14 @@
+variables,descriptions
+text,The line delivered or a specific scene direction
+speaker,"The character who delivered the line, or 'Scene Direction' for a scene direction"
+season,The season of the show the text is from
+episode,The episode of the season of the show the text is from
+scene,The scene of the episode of the season of the show the text is from
+utterance,The chronological order in the scene of the text
+title,The title of the episode the text is from
+directed_by,The director of the episode the text is from
+written_by,The writer(s) of the episode the text is from
+air-date,The first date the episode was available to watch in the US
+us_views_millions,The number of views the episode got in the US in millions
+imdb_rating,"The IMDB Rating of the episode (1 is worst, 10 is best)"
+emotion,The emotion the text was delivered with out of 7 emotions

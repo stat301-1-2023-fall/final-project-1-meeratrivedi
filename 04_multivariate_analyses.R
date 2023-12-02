@@ -26,9 +26,77 @@ maincharacters |>
 ggsave("plots/line_by_season_maincharacters.png") 
 
 
+
 ## Emotions Analyses ------
 
+##boxplots ----
+boxplot1 <- ggplot(lines_info_emotions, aes(x = emotion, y = imdb_rating, fill = emotion)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
+  labs(title = "Ratings by Emotions", 
+       subtitle = "Distribution of IMDB Ratings that episodes with lines of different emotions got.", 
+       x = "Emotion", y = "IMDB Rating") +
+  scale_fill_manual(name = NULL,
+                    values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+
+boxplot2 <- ggplot(lines_info_emotions, aes(x = emotion, y = us_views_millions, fill = emotion)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
+  labs(title = "Views by Emotions", 
+       subtitle = "Distribution of US Views that episodes with lines of different emotions got.", 
+       x = "Emotion", y = "Views (Millions)") +
+  scale_fill_manual(name = NULL,
+                    values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+library(cowplot)
+boxplots <- plot_grid(boxplot2/boxplot1)
+
+ggsave("plots/views_ratings_by_emotion.png")
+
+
+
  
+
+
+##faceted bar graph-----
+
+maincharacter_emotions <- lines_emotions |> 
+  filter(speaker %in% maincharacters$speaker) |> 
+  group_by(speaker) |> 
+  count(emotion) |> 
+  filter(!is.na(emotion))
+
+maincharacter_emotions |> 
+  ggplot(aes(x = emotion, y = n, fill = emotion))+
+  facet_wrap(~speaker)+
+  coord_flip()+
+  geom_col(show.legend = FALSE)+
+  geom_text(data = maincharacter_emotions, 
+            aes(y = n, label = n), 
+            color = "black",
+            size = 3, 
+            hjust = 1.2)+
+  scale_fill_manual(name = NULL, 
+                    values = c("mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise"))+
+  labs(title = "Count of Lines by Emotion - Main Characters", 
+       subtitle = "Number of Lines in the first 4 seasons delivered with 7 different emotions per character.", 
+       x = "Emotion", y = NULL) +
+  theme_linedraw()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+ggsave("plots/emotions_count_maincharacters.png") 
+
 
 ## Info Analyses ------
 
@@ -52,10 +120,11 @@ ggsave("plots/imdb_by_views.png")
 
 #views for directors-------
 director_plot <- topdirectors |> 
+  filter(directed_by %in% c("Gary Halvorson", "Kevin S. Bright", "Michael Lembeck")) |> 
   ggplot(mapping = aes(x = season, y = us_views_millions, color = directed_by))+
   geom_point(show.legend = FALSE)+
   facet_wrap(~directed_by, nrow = 1)+
-  scale_x_continuous(breaks = seq(1, 25, 1))+
+  scale_x_continuous(breaks = seq(1, 10, 1))+
   scale_color_manual(name = NULL,
                      values = c("#FFBC00", "#00B4EA", "#FF181E")) +
   labs(title = "Episode Views by Season for the Top 3 Directors", 
@@ -75,7 +144,7 @@ writer_plot <- topwriters |>
   ggplot(mapping = aes(x = season, y = us_views_millions, color = written_by))+
   geom_point(show.legend = FALSE)+
   facet_wrap(~written_by)+
-  scale_x_continuous(breaks = seq(1, 25, 1))+
+  scale_x_continuous(breaks = seq(1, 10, 1))+
   scale_color_manual(name = NULL,
                      values = c("#FFBC00", "#00B4EA", "#FF181E")) +
   labs(title = "Episode Views by Season for the Top 3 Writers", 
@@ -91,9 +160,45 @@ writer_plot <- topwriters |>
 library(patchwork)
 directors_writers <- director_plot / writer_plot
 
-ggsave("plots/directors_writers.png") 
+ggsave("plots/directors_writers_plot.png") 
 
 
+writer_box <- topwriters |> 
+  filter(written_by %in% c("Alexa Junge", "Andrew Reich & Ted Cohen", "David Crane & Marta Kauffman")) |> 
+  ggplot(mapping = aes(x = factor(season), y = us_views_millions, color = written_by))+ 
+  geom_boxplot(show.legend = FALSE)+
+  facet_wrap(~written_by)+
+  scale_color_manual(name = NULL,
+                     values = c("#FFBC00", "#00B4EA", "#FF181E")) +
+  labs(title = "Episode Views by Season for the Top 3 Writers", 
+       subtitle = "Views in the United States throughout all 10 Seasons for the Top 3 Writers", 
+       x = "Season", y = "Views (Millions)") +
+  theme_linedraw()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+
+director_box <- topdirectors |> 
+  filter(directed_by %in% c("Gary Halvorson", "Kevin S. Bright", "Michael Lembeck")) |> 
+  ggplot(mapping = aes(x = factor(season), y = us_views_millions, color = directed_by))+
+  geom_boxplot(show.legend = FALSE)+
+  facet_wrap(~directed_by)+
+  scale_color_manual(name = NULL,
+                     values = c("#FFBC00", "#00B4EA", "#FF181E")) +
+  labs(title = "Episode Views by Season for the Top 3 Directors", 
+       subtitle = "Views in the United States throughout all 10 Seasons for the Top 3 Directors", 
+       x = "Season", y = "Views (Millions)") +
+  theme_linedraw()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+directors_writers_box <- director_box / writer_box
+
+ggsave("plots/directors_writers_box.png") 
 
 #views distribution over time ------
 year_labels <- info |> 
@@ -147,39 +252,4 @@ info |>
 
 ggsave("plots/imdb_density.png") 
 
-
-
-
-##boxplots ----
-boxplot1 <- ggplot(lines_info_emotions, aes(x = emotion, y = imdb_rating, fill = emotion)) +
-  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
-  labs(title = "Ratings by Emotions", 
-       subtitle = "Distribution of IMDB Ratings that episodes with lines of different emotions got.", 
-       x = "Emotion", y = "IMDB Rating") +
-  scale_fill_manual(name = NULL,
-                     values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
-  theme_minimal()+
-  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
-        plot.subtitle = element_text(hjust = 0.5, size = 10), 
-        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
-        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
-
-
-boxplot2 <- ggplot(lines_info_emotions, aes(x = emotion, y = us_views_millions, fill = emotion)) +
-  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
-  labs(title = "Views by Emotions", 
-       subtitle = "Distribution of US Views that episodes with lines of different emotions got.", 
-       x = "Emotion", y = "Views (Millions)") +
-  scale_fill_manual(name = NULL,
-                    values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
-  theme_minimal()+
-  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
-        plot.subtitle = element_text(hjust = 0.5, size = 10), 
-        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
-        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
-
-boxplots <- plot_grid(boxplot1/boxplot2)
-
-ggsave("plots/views_ratings_by_emotion.png")
-  
 

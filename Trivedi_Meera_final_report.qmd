@@ -79,34 +79,41 @@ triplejoindisplay |>
   tab_source_note(source_note = md("The text variable was removed from this display for visual purposes but remains in the dataset."))
 ```
 
-## Summary Statistics
+## Lines
 
-#### IMDB and Views
 
-To begin my analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
+#### Lines Count - The Main Characters
 
-```{r}
-info |> 
-  summarize(mean = mean(imdb_rating),
-            mean1 = mean(us_views_millions),
-            .by = season) |> 
-  gt() |> 
-  tab_header(title = md("**Season Statistics**")) |> 
-  cols_label(season = md("Season"), 
-           mean = md("Average IMDB Rating"), 
-           mean1 = md("Average US Views")) |> 
-  tab_source_note(source_note = md("*Views are in millions")) |> 
-  fmt_number(
-    columns = mean, 
-    decimals = 2) |> 
-  fmt_number(
-    columns = mean1, 
-    decimals = 2)
-```
+@fig-bar1 answers my biggest question: Who has the most lines? David Crane & Marta Kauffman as well as the stars of the show have always said in interviews that the show was designed to have the six of them be an ensemble: six equal co-stars with no lead. However, someone has to have the most lines. This bar graph shows us the number of lines each of the six main characters had throughout the show, and as you can see, Rachel Green had the most lines, and almost 200 more than Phoebe Buffay, who had the least number of lines. This doesn't make her the lead, but it is interesting.
+
+![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
+
+#### Lines Over Time - Monica
+
+Next I wanted to understand how the number of lines changed throughout the show so I began by exploring that for my favorite character: Monica Geller. @fig-plot1 shows the number of lines she had in every season. It varied quite a lot, peaking at Season 5 and remarkably dropping at Season 10. This is not surprising because Season 5 is when her and Chandler's love storyline begins which takes up a lot of the plot for that period of time. Also, Season 10 had less episodes than the other seasons, so it makes sense that she had much fewer lines. However, perhaps other characters just had more?
+
+![Line Count - Monica Geller](plots/line_by_season_monica.png){#fig-plot1}
+
+#### Lines Over Time - The Main Characters
+
+To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I made earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
+
+![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
+
+
+#### Line Count - The Guest Characters
+
+@fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on Friends, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six Friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had. 
+
+![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
+
+## Writers & Directors
+
+Next I decided to explore the data about the episodes of Friends and how they differ between the writers and directors of the show. 
 
 #### Writers: Lines and Episodes
 
-Next I explored the writers. Since David Crane & Marta Kauffman's names appear on the screen at the end of every episode, I thought they wrote every episode, but I was so wrong! I didn't realize how many people have written episodes for this show, but here I have displayed the top 9 writers, in terms of episodes and lines. I wanted to see if the people who wrote the most episodes also wrote the most lines for the show, and surprisingly, it was different. Alexa Junge and Andre Reich & Ted Cohen actually wrote the most episodes but Andrew Reich & Ted Cohen wrote the most lines. Perhaps the number of lines in the episodes they wrote was more than the number of lines in the episodes Junge wrote. But she wrote two more episodes, meaning they must have been shorter or included more action than lines, or some other reason. 
+I began by exploring the writers. Since David Crane & Marta Kauffman's names appear on the screen at the end of every episode, I thought they wrote every episode, but I was so wrong! I didn't realize how many people have written episodes for this show, but here I have displayed the top 11 writers, in terms of episodes and lines. I wanted to see if the people who wrote the most episodes also wrote the most lines for the show, and surprisingly, it was different. Alexa Junge and Andrew Reich & Ted Cohen actually wrote the most episodes but Andrew Reich & Ted Cohen wrote the most lines. This means the number of lines in the episodes they wrote was more than the number of lines in the episodes Junge wrote, even though they both wrote 11 episodes.
 
 ```{r}
 #| message: false
@@ -133,9 +140,15 @@ writers_episodes |>
            num_lines = md("Lines Written"))
 ```
 
+#### Writers
+
+@fig-bar4 next shows the data in the table visually as it explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes. 
+
+![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
+
 #### Directors: Lines and Episodes
 
-explanation
+Next I explored the same data but for the directors. Since I only really remember James Burrows and Kevin S. Bright's names appearing on the screen at the end of most episodes, I thought they were the primary director, but I was wrong! Gary Halvorson actually directed more episodes than both of them, and much more than James Burrows. After some research, I realized that the names on the screen at the end of each episode are the producers, and do not necessarily mean those people were the primary writers or directors of the show. I was also surprised to see that David Schwimmer directed 10 episodes in addition to playing Ross Geller, a main character! The final thing that was interesting to me was how the top directors directed many more episodes than the top writers did. The most episodes attributed to one writer is 11, whereas the most episodes attributed to one director is 54. 
 
 ```{r}
 #| message: false
@@ -162,34 +175,64 @@ directors_episodes |>
              num_lines = md("Lines Directed"))
 ```
 
+#### Directors
 
-#### Audiences Favorite Emotion
+@fig-bar5 next shows the data in the table visually as it explores the directors and the number of episodes they have directed. Like writers, there were many directors so this bargraph only displays the 10 directors who wrote the most episodes. I was surprised that the top two directors directed way more episodes than the other 8 directors in this top 10. 
+
+![Episode Directors](plots/info_dist_topdirectors.png){#fig-bar5}
+
+#### Views - Top Directors and Writers
+
+Finally, I thought it would be interesting to look at the distribution of episode views per season and compare the results for the writers and directors. To do this, I chose the three writers and directors who wrote and directed the most episodes. We know from previous analyses that Gary Halvorson directed the most episodes, but this shows that he didn't direct until the fourth season, whereas Kevin S. Bright directed at least one episode per season but still directed far less than Halvorson. Both of these directors had their episodes get a wide range of views, with each season having a different distributions of views. For insance in Season 10, Kevin's episodes got a very wide range of views but with a relatively low median. The flat lines represent a singular episode. Also, considering the distribution of views for Alexa's episodes were shifted vertically higher in relation to the other writers, her episodes generally got more views. That could be a reflection of her writing skills?
+
+![Top Directors and Writers](plots/directors_writers_box.png){#fig-box1}
+
+## Views and Ratings
+
+Next I decided to explore the two measures of popularity of an episode: Views and the IMDB Rating.
+
+#### IMDB Ratings
+
+First, I looked at the frequency of IMDB ratings for the first 5 seasons. I wanted to get a sense of how much people like the show, but am only showing the first 5 seasons because 10 different overlapping lines would be too much. Considering the only available range of IMDB rating values was from 7-10, this was an incredibly successful show. Never having an IMDB rating below 7 is quite impressive. That being said, each season had a similar distribution of frequency, with most episodes ranking between 8 and 8.5.
+
+![IMDB Density](plots/imdb_density.png){#fig-density1}
+
+#### Views in the United States
+
 explanation
 
+![Views Over Time](plots/views_over_time.png){#fig-plot5}
+
+
+#### IMDB Ratings and Views
+
+To begin my analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
+
 ```{r}
-lines_info_emotions |> 
-  group_by(emotion) |> 
-  summarize(avg_views = mean(us_views_millions, na.rm = TRUE), 
-            avg_imdb = mean(imdb_rating, na.rm = TRUE), 
-            n = n()) |> 
+info |> 
+  summarize(mean = mean(imdb_rating),
+            mean1 = mean(us_views_millions),
+            .by = season) |> 
   gt() |> 
-  tab_header(title = md("**Views and Ratings per Emotion**"), 
-             subtitle = md("*Average Views and IMDB Rating for lines with different emotions.*")) |> 
-  cols_label(emotion = md("Emotion"), 
-             avg_views = md("Average <br> Views"), 
-             avg_imdb = md("Average <br> IMDB Rating"), 
-             n = md("Number <br> of Lines")) |> 
+  tab_header(title = md("**Season Statistics**")) |> 
+  cols_label(season = md("Season"), 
+           mean = md("Average IMDB Rating"), 
+           mean1 = md("Average US Views")) |> 
   tab_source_note(source_note = md("*Views are in millions")) |> 
   fmt_number(
-    columns = avg_views, 
+    columns = mean, 
     decimals = 2) |> 
   fmt_number(
-    columns = avg_imdb, 
+    columns = mean1, 
     decimals = 2)
 ```
 
-![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box1}
 
+#### Measures of Episode Popularity
+
+explanation
+
+![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
 
 #### Audiences Favorite Episode
 
@@ -215,6 +258,7 @@ top5views <- info |>
     decimals = 1)
 top5views
 ```
+
 ```{r}
 #top 5 episodes by rating
 top5imdb <- info |> 
@@ -232,30 +276,7 @@ top5imdb
 ```
 
 
-
-## Univariate Analyses
-
-#### The Main Characters
-
-
-@fig-bar1 answers my biggest question: Who has the most lines? David Crane & Marta Kauffman as well as the stars of the show have always said in interviews that the show was designed to have the six of them be an ensemble: six equal co-stars with no lead. However, someone has to have the most lines. This bar graph shows us the number of lines each of the six main characters had throughout the show, and as you can see, Rachel Green had the most lines, and almost 200 more than Phoebe Buffay, who had the least number of lines. This doesn't make her the lead, but it is interesting.
-
-![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
-
-
-#### The Guest Characters
-
-@fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on Friends, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six Friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had. 
-
-![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
-
-
-#### Lines - Monica
-
-Next I wanted to understand how the number of lines changed throughout the show so I began by exploring that for my favorite character: Monica Geller. @fig-plot1 shows the number of lines she had in every season. It varied quite a lot, peaking at Season 5 and remarkably dropping at Season 10. This is not surprising because Season 5 is when her and Chandler's love storyline begins which takes up a lot of the plot for that period of time. Also, Season 10 had less episodes than the other seasons, so it makes sense that she had much fewer lines. However, perhaps other characters just had more?
-
-![Line Count - Monica Geller](plots/line_by_season_monica.png){#fig-plot1}
-
+## Emotions
 
 #### Emotions
 
@@ -263,58 +284,39 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 ![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
+#### Main Character Emotions
 
-#### Writers
+@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. As you can see, all 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is by being able to show a proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a closer second. 
 
-@fig-bar4 next explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes. 
+![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar4}
 
-![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
-
-
-#### Directors
-
-@fig-bar5 next explores the directors and the number of episodes they have directed. 
-
-![Episode Directors](plots/info_dist_topdirectors.png){#fig-bar5}
-
-
-
-#### Density of IMDB Ratings per Season
+#### Audiences Favorite Emotion
 
 explanation
 
-![IMDB Density](plots/imdb_density.png){#fig-density1}
+```{r}
+lines_info_emotions |> 
+  group_by(emotion) |> 
+  summarize(avg_views = mean(us_views_millions, na.rm = TRUE), 
+            avg_imdb = mean(imdb_rating, na.rm = TRUE), 
+            n = n()) |> 
+  gt() |> 
+  tab_header(title = md("**Views and Ratings per Emotion**"), 
+             subtitle = md("*Average Views and IMDB Rating for lines with different emotions.*")) |> 
+  cols_label(emotion = md("Emotion"), 
+             avg_views = md("Average <br> Views"), 
+             avg_imdb = md("Average <br> IMDB Rating"), 
+             n = md("Number <br> of Lines")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = avg_views, 
+    decimals = 2) |> 
+  fmt_number(
+    columns = avg_imdb, 
+    decimals = 2)
+```
 
-
-## Multivariate Analyses
-
-#### Lines - Main Characters
-
-To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I made earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
-
-![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
-
-
-#### Measures of Episode Popularity
-
-explanation
-
-![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
-
-
-#### Views - Top Directors and Writers
-
-explanation
-
-![Top Directors and Writers](plots/directors_writers.png){#fig-plot4}
-
-
-#### Views over Time
-
-explanation
-
-![Views Over Time](plots/views_over_time.png){#fig-plot5}
-
+![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box2}
 
 ## Conclusion
 
@@ -330,6 +332,11 @@ conclusion
 
 :::
 
+## Appendix 
+
+This is the same exploration as the faceted side-by-side boxplot graph of episode views by season for the top 3 directors and writers, but in the form of a faceted scatterplot. This is because I thought it might be useful or interesting to see the different points that represent each episode stacked on top of each other to represent multiple episodes written/directed in one season. Ideally, scatterplots don't have points lying on top of each other but in this case I thought it was interesting to see points lined up vertically by season to easily see each observation.
+
+![Top Directors and Writers](plots/directors_writers_plot.png){#fig-plot4}
 
 
 
