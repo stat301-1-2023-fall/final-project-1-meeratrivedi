@@ -167,12 +167,6 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 ![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
 
-#### Directors
-
-@fig-bar5 next explores the directors and the number of episodes they have directed. 
-
-![Episode Directors](plots/info_dist_topdirectors.png){#fig-bar5}
-
 ## Multivariate Analyses
 
 #### Lines - Main Characters
