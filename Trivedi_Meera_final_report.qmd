@@ -1,5 +1,5 @@
 ---
-title: "Progress Memo 2"
+title: "Final Report"
 subtitle: |
   | Final Project 
   | Data Science 1 with R (STAT 301-1)
@@ -83,7 +83,6 @@ triplejoindisplay |>
   tab_source_note(source_note = md("The text variable was removed from this display for visual purposes but remains in the dataset."))
 ```
 
-
 ## Summary Statistics
 
 #### IMDB and Views
@@ -138,6 +137,80 @@ writers_episodes |>
            num_lines = md("Number of Lines Written"))
 ```
 
+#### Audiences Favorite Emotion
+explanation
+
+```{r}
+lines_info_emotions |> 
+  group_by(emotion) |> 
+  summarize(avg_views = mean(us_views_millions, na.rm = TRUE), 
+            avg_imdb = mean(imdb_rating, na.rm = TRUE), 
+            n = n()) |> 
+  gt() |> 
+  tab_header(title = md("**Views and Ratings per Emotion**"), 
+             subtitle = md("*Average Views and IMDB Rating for lines with different emotions.*")) |> 
+  cols_label(emotion = md("Emotion"), 
+             avg_views = md("Average <br> Views"), 
+             avg_imdb = md("Average <br> IMDB Rating"), 
+             n = md("Number <br> of Lines")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = avg_views, 
+    decimals = 2) |> 
+  fmt_number(
+    columns = avg_imdb, 
+    decimals = 2)
+```
+
+![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box1}
+
+
+#### Audiences Favorite Episode
+explanation
+
+```{r}
+#top 5 episodes by views
+top5views <- info |> 
+  select(season, episode, title, us_views_millions) |> 
+  slice_max(us_views_millions, n = 5) |> 
+  slice_head(n=5) |> 
+  gt() |> 
+  tab_header(title = md("**Top 5 Viewed Episodes**"), 
+             subtitle = md("*The 5 Episodes with the most US views throughout all 10 seasons.*")) |> 
+  cols_label(season = md("Season"), 
+             episode = md("Episode"), 
+             title = md("Title"), 
+             us_views_millions = md("Views")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = us_views_millions, 
+    decimals = 1)
+
+#top 5 episodes by rating
+top5imdb <- info |> 
+  select(season, episode, title, imdb_rating) |> 
+  slice_max(imdb_rating, n = 5) |> 
+  gt() |> 
+  tab_header(title = md("**Top 5 Rated Episodes**"), 
+             subtitle = md("*The 5 Episodes with the highest IMDB Ratings throughout all 10 seasons.*")) |> 
+  cols_label(season = md("Season"), 
+             episode = md("Episode"), 
+             title = md("Title"), 
+             imdb_rating = md("IMDB Rating")) |> 
+  tab_source_note(source_note = md("*Repeated titles refer to two-part episodes"))
+
+#listed_tables <- list(top5views, top5imdb)
+#gt_two_column_layout(listed_tables)
+
+top5viewed <- top5views %>%
+    gtsave("top5viewed.png", path = "tables")
+top5rated <- top5imdb %>%
+    gtsave("top5rated.png", path = "tables")
+```
+
+![](tables/top5viewed.png){#table1} ![](tables/top5rated.png){#table2}
+
+
 ## Univariate Analyses
 
 #### The Main Characters
@@ -147,11 +220,13 @@ writers_episodes |>
 
 ![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
 
+
 #### The Guest Characters
 
 @fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on Friends, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six Friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had. 
 
 ![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
+
 
 #### Lines - Monica
 
@@ -159,17 +234,27 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 ![Line Count - Monica Geller](plots/line_by_season_monica.png){#fig-plot1}
 
+
 #### Emotions
 
 @fig-bar3 next explores the emotions of the lines delivered on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of Friends is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.  
 
 ![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
+
 #### Writers
 
 @fig-bar4 next explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes. 
 
 ![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
+
+
+#### Density of IMDB Ratings per Season
+
+explanation
+
+![IMDB Density](plots/imdb_density.png){#fig-density1}
+
 
 ## Multivariate Analyses
 
@@ -179,11 +264,31 @@ To build on the previous analysis of Monica's lines, @fig-plot2 shows us the cha
 
 ![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
 
-## Summary of Progress
 
-So far, I have done all the univariate analyses I plan to do, but I may do more depending on what multivariate analyses I decide to do. I've organized this progress memo in a way that showcases the progress I've made in each category of analysis, but for the final report I may re-organize in a way that shows the analyses that more closely correspond to each other together. For example: I will probably put the two scatterplots I have made together since they relate to each other. Next I need to complete the multivariate analyses, and have multiple pertaining to data from each of the individual datasets. Right now I have only examined the lines, and going forward I want to examine relationships between the many other variables I have in my joined datasets. I am sure as multivariate analyses begin to form, relevant summary statistics will as well, so I will then make more data tables displaying those. I believe I have succeeded thus far at making all my analyses visually appealing, but the things I will work on for the final project are ordering them in a way that relates them to each other and exploring them through different varieties of distributions. Bargraphs have made the most sense for each analyses so far since I have mostly been showing count, but I want to use varying geom layers and find new summary statistics. I have discovered so many interesting things about this show so far and I will work to ensure my multivariate analyses not only explore more, but tie the work I've done so far together. My next step will be to work on relationships between my numerical data, probably in scatterplot form, and then go from there.
-I also do need to create codebooks for my data and create a READ.me file for my plots folder. 
+#### Measures of Episode Popularity
 
+explanation
+
+![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
+
+
+#### Views - Top Directors and Writers
+
+explanation
+
+![Top Directors and Writers](plots/directors_writers.png){#fig-plot4}
+
+
+#### Views over Time
+
+explanation
+
+![Views Over Time](plots/views_over_time.png){#fig-plot5}
+
+
+## Conclusion
+
+conclusion
 
 ## Reference
 
@@ -194,4 +299,8 @@ I also do need to create codebooks for my data and create a READ.me file for my 
 [https://www.kaggle.com/datasets/sujaykapadnis/friends/](https://www.kaggle.com/datasets/sujaykapadnis/friends/)
 
 :::
+
+
+
+
 

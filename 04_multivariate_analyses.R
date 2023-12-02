@@ -46,10 +46,12 @@ ggplot(data = info, aes(us_views_millions, imdb_rating))+
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
         axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
   
+ggsave("plots/imdb_by_views.png") 
+
 
 
 #views for directors-------
-topdirectors |> 
+director_plot <- topdirectors |> 
   ggplot(mapping = aes(x = season, y = us_views_millions, color = directed_by))+
   geom_point(show.legend = FALSE)+
   facet_wrap(~directed_by, nrow = 1)+
@@ -68,7 +70,7 @@ topdirectors |>
 
 
 #views for writers -----
-topwriters |> 
+writer_plot <- topwriters |> 
   filter(written_by %in% c("Alexa Junge", "Andrew Reich & Ted Cohen", "David Crane & Marta Kauffman")) |> 
   ggplot(mapping = aes(x = season, y = us_views_millions, color = written_by))+
   geom_point(show.legend = FALSE)+
@@ -86,7 +88,10 @@ topwriters |>
         axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
 
 
-info
+library(patchwork)
+directors_writers <- director_plot / writer_plot
+
+ggsave("plots/directors_writers.png") 
 
 
 
@@ -117,6 +122,8 @@ info |>
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"),
         axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
 
+ggsave("plots/views_over_time.png") 
+
 
 
 #imdb density per season -----
@@ -137,3 +144,42 @@ info |>
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"),
         axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"), 
         legend.title = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+ggsave("plots/imdb_density.png") 
+
+
+
+
+##boxplots ----
+boxplot1 <- ggplot(lines_info_emotions, aes(x = emotion, y = imdb_rating, fill = emotion)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
+  labs(title = "Ratings by Emotions", 
+       subtitle = "Distribution of IMDB Ratings that episodes with lines of different emotions got.", 
+       x = "Emotion", y = "IMDB Rating") +
+  scale_fill_manual(name = NULL,
+                     values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+
+boxplot2 <- ggplot(lines_info_emotions, aes(x = emotion, y = us_views_millions, fill = emotion)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE)+
+  labs(title = "Views by Emotions", 
+       subtitle = "Distribution of US Views that episodes with lines of different emotions got.", 
+       x = "Emotion", y = "Views (Millions)") +
+  scale_fill_manual(name = NULL,
+                    values = c("#FFBC00", "#00B4EA", "#FF181E", "#FFBC00", "#00B4EA", "#FF181E", "#FFBC00")) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+boxplots <- plot_grid(boxplot1/boxplot2)
+
+ggsave("plots/views_ratings_by_emotion.png")
+  
+

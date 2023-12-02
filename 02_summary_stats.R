@@ -80,16 +80,53 @@ lines_info_emotions |>
   group_by(emotion) |> 
   summarize(avg_views = mean(us_views_millions, na.rm = TRUE), 
             avg_imdb = mean(imdb_rating, na.rm = TRUE), 
-            n = n())
+            n = n()) |> 
+  gt() |> 
+  tab_header(title = md("**Views and Ratings per Emotion**"), 
+             subtitle = md("*Average Views and IMDB Rating for lines with different emotions.*")) |> 
+  cols_label(emotion = md("Emotion"), 
+             avg_views = md("Average <br> Views"), 
+             avg_imdb = md("Average <br> IMDB Rating"), 
+             n = md("Number <br> of Lines")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  fmt_number(
+    columns = avg_views, 
+    decimals = 2) |> 
+  fmt_number(
+    columns = avg_imdb, 
+    decimals = 2)
+
 
 #top 5 episodes by views
-info |> 
+top5views <- info |> 
   select(season, episode, title, us_views_millions) |> 
-  slice_max(us_views_millions, n = 5)
+  slice_max(us_views_millions, n = 5) |> 
+  slice_head(n=5) |> 
+  gt() |> 
+  tab_header(title = md("**Top 5 Viewed Episodes**"), 
+             subtitle = md("*The 5 Episodes with the most US views throughout all 10 seasons.*")) |> 
+  cols_label(season = md("Season"), 
+             episode = md("Episode"), 
+             title = md("Title"), 
+             us_views_millions = md("Views")) |> 
+  tab_source_note(source_note = md("*Views are in millions")) |> 
+  tab_source_note(source_note = md("*Repeated titles refer to two-part episodes")) |> 
+  fmt_number(
+    columns = us_views_millions, 
+    decimals = 1)
 
 #top 5 episodes by rating
-info |> 
+top5imdb <- info |> 
   select(season, episode, title, imdb_rating) |> 
-  slice_max(imdb_rating, n = 5)
+  slice_max(imdb_rating, n = 5) |> 
+  gt() |> 
+  tab_header(title = md("**Top 5 Rated Episodes**"), 
+             subtitle = md("*The 5 Episodes with the highest IMDB Ratings throughout all 10 seasons.*")) |> 
+  cols_label(season = md("Season"), 
+             episode = md("Episode"), 
+             title = md("Title"), 
+             imdb_rating = md("IMDB Rating")) |> 
+  tab_source_note(source_note = md("*Repeated titles refer to two-part episodes"))
 
-
+listed_tables <- list(top5views, top5imdb)
+gt_two_column_layout(listed_tables)
