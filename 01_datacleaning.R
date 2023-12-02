@@ -151,7 +151,7 @@ directors <- info |>
   filter(n > 1) |> 
   arrange(desc(n)) |> 
   rename(episodes_directed = n) |> 
-  slice_max(episodes_directed, n = 3)
+  slice_max(episodes_directed, n = 10)
 
 directors
 
