@@ -65,10 +65,6 @@ I started out with three datasets with some overlapping variables that could act
 
 ```{r}
 #| message: false
-lines_info_emotions <- lines_info |> 
-  full_join(emotions) |> 
-  filter(!is.na(emotion)) 
-
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 
 triplejoindisplay |>
@@ -166,7 +162,9 @@ lines_info_emotions |>
 
 
 #### Audiences Favorite Episode
+
 explanation
+
 
 ```{r}
 #top 5 episodes by views
@@ -185,7 +183,9 @@ top5views <- info |>
   fmt_number(
     columns = us_views_millions, 
     decimals = 1)
-
+top5views
+```
+```{r}
 #top 5 episodes by rating
 top5imdb <- info |> 
   select(season, episode, title, imdb_rating) |> 
@@ -198,17 +198,9 @@ top5imdb <- info |>
              title = md("Title"), 
              imdb_rating = md("IMDB Rating")) |> 
   tab_source_note(source_note = md("*Repeated titles refer to two-part episodes"))
-
-#listed_tables <- list(top5views, top5imdb)
-#gt_two_column_layout(listed_tables)
-
-top5viewed <- top5views %>%
-    gtsave("top5viewed.png", path = "tables")
-top5rated <- top5imdb %>%
-    gtsave("top5rated.png", path = "tables")
+top5imdb
 ```
 
-![](tables/top5viewed.png){#table1} ![](tables/top5rated.png){#table2}
 
 
 ## Univariate Analyses

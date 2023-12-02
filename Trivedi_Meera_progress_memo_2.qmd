@@ -65,10 +65,6 @@ I started out with three datasets with some overlapping variables that could act
 
 ```{r}
 #| message: false
-lines_info_emotions <- lines_info |> 
-  full_join(emotions) |> 
-  filter(!is.na(emotion)) 
-
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 
 triplejoindisplay |>

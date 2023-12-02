@@ -117,7 +117,7 @@ lines_info_emotions <- lines_info |>
 
 lines_info_emotions
 
-write_csv(lines_info, file = "data/lines_info_emotions.csv")
+write_csv(lines_info_emotions, file = "data/lines_info_emotions.csv")
 
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 

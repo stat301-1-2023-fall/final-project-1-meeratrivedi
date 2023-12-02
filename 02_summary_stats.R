@@ -53,7 +53,9 @@ writers_lines <- lines_info |>
   rename(num_lines = n) |> 
   arrange(desc(num_lines))
 
-writers_lines <- head(writers_lines, n=10)
+writers_lines <- head(writers_lines, n=11)
+
+writers_lines
 
 
 #lines per episode
@@ -62,9 +64,9 @@ writers_episodes <- info |>
   rename(num_episodes = n) |> 
   arrange(desc(num_episodes))
 
-writers_episodes <- head(writers_episodes, n = 10)
+writers_episodes <- head(writers_episodes, n = 11)
 
-
+writers_episodes
 
 writers_episodes |> 
   full_join(writers_lines) |> 
@@ -73,6 +75,31 @@ writers_episodes |>
   cols_label(written_by = md("Writer(s)"), 
              num_episodes = md("Number of Episodes Written"), 
              num_lines = md("Number of Lines Written"))
+
+
+directors_lines <- lines_info |> 
+  count(directed_by) |> 
+  rename(num_lines = n) |> 
+  arrange(desc(num_lines))
+
+directors_lines <- head(directors_lines, n=10)
+
+directors_episodes <- info |> 
+  count(directed_by) |> 
+  rename(num_episodes = n) |> 
+  arrange(desc(num_episodes))
+
+directors_episodes <- head(directors_episodes, n = 10)
+
+directors_episodes
+
+directors_episodes |> 
+  full_join(directors_lines) |> 
+  gt() |> 
+  tab_header(title = md("**Total Lines & Episodes Per Director**")) |> 
+  cols_label(directed_by = md("Director"), 
+             num_episodes = md("Episodes Directed"), 
+             num_lines = md("Lines Directed"))
 
 
 ##emotions and views and ratings

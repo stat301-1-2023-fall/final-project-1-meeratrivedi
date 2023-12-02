@@ -133,8 +133,6 @@ ggsave("plots/emotions_count.png")
 writer_labels <- topwriters |> 
   count(written_by)
 
-
-
 topwriters |> 
   ggplot(aes(x = written_by, fill = written_by)) +
   geom_bar(show.legend = FALSE) + 
@@ -155,10 +153,45 @@ topwriters |>
                               "Jeffrey \n Astrof \n & Mike \n Sikowitz")) +
   labs(title = "Episode Writers", 
        subtitle = "Total Number of Episodes Written by the 11 Most Recurring Writers", 
-       x = "Character", y = NULL) +
+       x = NULL, y = NULL) +
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
         plot.subtitle = element_text(hjust = 0.5, size = 10), 
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"))
 
 ggsave("plots/info_dist_topwriters.png") 
+
+
+
+
+#top directors ----
+director_labels <- topdirectors |> 
+  count(directed_by)
+
+
+topdirectors |> 
+  ggplot(aes(x = directed_by, fill = directed_by)) +
+  geom_bar(show.legend = FALSE) + 
+  geom_text(data = director_labels,
+            aes(y = n, label = n), 
+            nudge_y = -1, vjust = "top") + 
+  scale_x_discrete(name = NULL, 
+                   labels = c("Gary \n Halvorson", 
+                              "Kevin S. \n Bright", 
+                              "Michael \n Lembeck",
+                              "James \n Burrows", 
+                              "Gail \n Mancuso", 
+                              "Peter \n Bonerz", 
+                              "Ben \n Weiss", 
+                              "David \n Schwimmer", 
+                              "Robby \n Benson", 
+                              "Shelley \n Jensen")) +
+  labs(title = "Episode Directors", 
+       subtitle = "Total Number of Episodes Directed by the 10 Most Recurring Directors", 
+       x = "Character", y = NULL) +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+ggsave("plots/info_dist_topdirectors.png") 
