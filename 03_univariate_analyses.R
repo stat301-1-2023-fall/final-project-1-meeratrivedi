@@ -93,11 +93,11 @@ ggsave("plots/line_dist_guestcharacters.png")
 ## Emotions Analyses --------
 
 #emotion distribution----
-label_numbers <- lines_emotions |> 
+label_numbers <- lines_info_emotions |> 
   count(emotion) |> 
   filter(!is.na(emotion))
 
-lines_emotions |> 
+lines_info_emotions |> 
   count(emotion) |> 
   filter(!is.na(emotion)) |> 
   ggplot(aes(x = emotion, y = n, fill = emotion)) +
@@ -106,7 +106,7 @@ lines_emotions |>
             aes(y = n, label = n), 
             color = "white",
             size = 5,
-            nudge_y = -25, vjust = "top")+
+            nudge_y = -55, vjust = "top")+
   scale_fill_manual(name = NULL, 
                     values = c("mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise", "darkturquoise", "turquoise", "mediumturquoise"))+
   labs(title = "Count of Lines by Emotion", 
@@ -120,8 +120,13 @@ lines_emotions |>
 ggsave("plots/emotions_count.png") 
 
 
-
-
+#VIS MISS
+library(naniar)
+lines_info_emotions_wmissingness <- lines_info |> 
+  filter(speaker != "Scene Directions") |> 
+  full_join(emotions) |> 
+  relocate(emotion, us_views_millions, imdb_rating, air_date, written_by, directed_by, title, speaker, season, episode, scene, utterance, text)
+vis_miss(lines_info_emotions_wmissingness)
 
 
 

@@ -1,9 +1,7 @@
 ---
-title: "Final Report"
-subtitle: |
-  | Final Project 
-  | Data Science 1 with R (STAT 301-1)
+title: "Friends: An EDA"
 author: "Meera Trivedi"
+date: today
 
 format:
   html:
@@ -191,22 +189,9 @@ Finally, I thought it would be interesting to look at the distribution of episod
 
 Next I decided to explore the two measures of popularity of an episode: Views and the IMDB Rating.
 
-#### IMDB Ratings
-
-First, I looked at the frequency of IMDB ratings for the first 5 seasons. I wanted to get a sense of how much people like the show, but am only showing the first 5 seasons because 10 different overlapping lines would be too much. Considering the only available range of IMDB rating values was from 7-10, this was an incredibly successful show. Never having an IMDB rating below 7 is quite impressive. That being said, each season had a similar distribution of frequency, with most episodes ranking between 8 and 8.5.
-
-![IMDB Density](plots/imdb_density.png){#fig-density1}
-
-#### Views in the United States
-
-explanation
-
-![Views Over Time](plots/views_over_time.png){#fig-plot5}
-
-
 #### IMDB Ratings and Views
 
-To begin my analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
+To begin this analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
 
 ```{r}
 info |> 
@@ -227,17 +212,27 @@ info |>
     decimals = 2)
 ```
 
+#### IMDB Ratings
+
+Next I decided to explore each measure of popularity separately. First, I looked at the frequency of IMDB ratings for the first 5 seasons. I wanted to get a sense of how much people like the show, but am only showing the first 5 seasons because 10 different overlapping lines would be too much. Considering the only available range of IMDB rating values was from 7-10, this was an incredibly successful show. Never having an IMDB rating below 7 is quite impressive. That being said, each season had a similar distribution of frequency, with most episodes ranking between 8 and 8.5.
+
+![IMDB Density](plots/imdb_density.png){#fig-density1}
+
+#### Views in the United States
+
+Next, I decided to explore views. This plot shows the average number of views each episode got per year to show how views have changed over time, not necessarily per season. Views first peaked after two years of the show running in 1996 and then greatly decreased and increased again, peaking again in the final year of the show in 2004. So using views as a measure of popularity, on average the show was most popular in its 3rd and 10th year, and least popular as it was starting. Still though, at least around 20 million views per year is impressive. 
+
+![Views Over Time](plots/views_over_time.png){#fig-plot5}
 
 #### Measures of Episode Popularity
 
-explanation
+Next I had to see if there was a relationship between these measures of popularity, is a high viewing indicative of a high rating or vice versa? I thought this would be true, that there would be a positive relationship because I think if an episode was worthy of a high rating it would garner more views because people would share it. I did think the relationship would be stronger but as I predicted it is clearly positive. Most episodes got between 20 and 30 million views and all had very high IMDB ratings which is high for both metrics, it just doesn't look like that in this zoomed-in scatterplot because there was not a wide range of views or ratings. This shows how consistently well Friends performed in both metrics of popularity. 
 
 ![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
 
 #### Audiences Favorite Episode
 
-explanation
-
+Because Friends consistently got many views and was consistently rated high, I decided to see if the episodes with the most views are the episodes with the highest rating, to see if these measures are really consistent with each other. These tables show the 5 episodes with the most views and the 5 episodes with the highest IMDB ratings, and it shows that there is only one episode in both top 5 categories: The Last One. This makes sense, as it is the series finale. I was surprised to see that out of the top 5 episodes, the episodes that were broken into two episodes, the first being a Part 1 and the second being a Part 2, appeared in both of these tables, especially in the views table. I guess since two part episodes have a longer story, maybe it is more interesting and people watch it more? I was, however, not surprised that the episode with the highest IMDB rating, other than The Last One, is The One Where Everybody Finds Out, because it has one of the biggest plot reveals of the show. 
 
 ```{r}
 #top 5 episodes by views
@@ -275,24 +270,25 @@ top5imdb <- info |>
 top5imdb
 ```
 
-
 ## Emotions
+
+Finally, I explored the emotions variable and how it relates to the other variables in the combined dataset. 
 
 #### Emotions
 
-@fig-bar3 next explores the emotions of the lines delivered on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of Friends is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.  
+@fig-bar3 first visualizes the count of lines delivered with each of 7 different emotions on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of "*Friends*" is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.  
 
 ![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
 #### Main Character Emotions
 
-@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. As you can see, all 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is by being able to show a proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a closer second. 
+@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second. 
 
 ![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar4}
 
 #### Audiences Favorite Emotion
 
-explanation
+Finally, I decided to look at things from the audiences perspective, and look at our metrics of popularity for each emotion. This table shows the average views and average IMDB rating per emotion, and the number of lines in the first four seasons delivered with that emotion. Some important things to note here, are that since there is only data for the emotions variable in the first four seasons, only values for views and IMDB rating from those four seasons were able to be taken into account. And these metrics of popularity correspond to each episode, whereas emotion corresponds to each line, so in order to calculate these averages, the metrics of popularity for each episode was attributed to every line within that episode. In reality, IMDB ratings are not calculated per line, and different levels of views cannot be calculated per line, so this is the best available way to measure this breakdown. Because of the small range of values for views and IMDB ratings and the level of missingness in this data, all values of the calculated averages fall within a small range of values. However, the number of lines is helpful to see, and are the same numbers from the first blue emotions bargraph.
 
 ```{r}
 lines_info_emotions |> 
@@ -316,7 +312,21 @@ lines_info_emotions |>
     decimals = 2)
 ```
 
+
+@fig-box2 builds on this by showing the distribution of views and ratings for each emotion; however, they are pretty similar. The spreads are slightly different sizes but all have very similar medians, and because the metrics of popularity correspond to episodes, episodes that are outliers appear for each emotion when there are lines of every emotion in that episode. This plot was constructed to see if the similar averages were reflective of similar distributions, and this is now true, but probably because of the level of missingness.
+
 ![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box2}
+
+```{r}
+#| message: false
+library(naniar)
+lines_info_emotions_wmissingness <- lines_info |> 
+  filter(speaker != "Scene Directions") |> 
+  full_join(emotions) |> 
+  relocate(emotion, us_views_millions, imdb_rating, air_date, written_by, directed_by, title, speaker, season, episode, scene, utterance, text)
+vis_miss(lines_info_emotions_wmissingness)
+```
+The emotions variable is missing values for 79% of the lines in this show, which is a lot, and might partially explain the similar distributions.
 
 ## Conclusion
 
