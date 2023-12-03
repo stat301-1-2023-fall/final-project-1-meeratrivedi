@@ -59,12 +59,10 @@ In my third dataset there are 236 observations corresponding to every episode of
 
 ### Joining Datasets
 
-I started out with three datasets with some overlapping variables that could act as compound keys to join the datasets. I called each dataset "lines", "emotions" and "info" respectively and will use those names to refer to them for the rest of this report. I first cleaned the lines dataset by removing the lines with missing values for "speaker" since those lines will not be relevant to my analyses. I then made multiple joined datasets: one joining lines and emotions, one joining lines and info, and one joining all three. I also made subsets of the lines dataset that I will be using in my analyses: one only including the six main characters and one including every character but them. Since I will be analyzing the main and side characters separately, this was necessary. All of these cleaned datasets as well as a codebook are stored in the data sub-directory as csv files, and shown here in @tbl-all is the first 10 rows of all three datasets combined together as an example:
+I started out with three datasets with some overlapping variables that could act as compound keys to join the datasets. I called each dataset "lines", "emotions" and "info" respectively and will use those names to refer to them for the rest of this report. I first cleaned the lines dataset by removing the lines with missing values for "speaker" since those lines will not be relevant to my analyses. I then made multiple joined datasets: one joining lines and emotions, one joining lines and info, and one joining all three. I also made subsets of the lines dataset that I will be using in my analyses: one only including the six main characters and one including every character but them. Since I will be analyzing the main and side characters separately, this was necessary. All of these cleaned datasets as well as a codebook are stored in the data sub-directory as csv files, and shown here is the first 10 rows of all three datasets combined together as an example:
 
 ```{r}
-#| message: false
 #| label: tbl-all
-
 
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 
@@ -341,12 +339,18 @@ I also learned a lot about television throughout this analysis. I learned that b
 
 If I were to continue exploring this dataset, I would want to continue exploring every variable I could and its relationship with ratings and views to see how more things relate to success, and I'd also want to learn more about the two-part episodes. I want to know if every two-part episode got the exact same number of views because no significant number of people watched only one of them, or if possibly the views were summed and then averaged between the two. I also want to know how views were coded, since I know many clips of *Friends* are available on free viewing platforms like Youtube, TikTok, and Instagram, and that people still watch the show today, so views are still increasing. I would want to be able to do a recollection of views and reanalyze everything since I believe the numbers would greatly increase.
 
-## Reference
+## References
 
 ::: {.callout-tip icon="false"}
 ## Data Source
 
 Kapadnis, Sujay. (2023, Oct. 23). *Friends Sitcom Dataset*. Kaggle. [www.kaggle.com/datasets/sujaykapadnis/friends/.](www.kaggle.com/datasets/sujaykapadnis/friends/.)
+:::
+
+::: {.callout-tip icon="false"}
+## Interview with David Crane and Marta Kauffman
+
+Byrne, Suzy. (2023, Nov. 3). *‘There Are No Stars Here’: How the ‘friends’ Cast Bonded When the Show Began - and Became ‘a Family.*. Yahoo!. [www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html] (www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html)
 :::
 
 ## Appendix
