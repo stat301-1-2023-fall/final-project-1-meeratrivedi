@@ -20,7 +20,7 @@ full_codebook <- tibble(
                    "The first date the episode was available to watch in the US", 
                    "The number of views the episode got in the US in millions", 
                    "The IMDB Rating of the episode (1 is worst, 10 is best)", 
-                   "The emotion the text was delivered with out of 7 emotions")) |> 
+                   "The emotion the text was delivered with out of 7 emotions (joyful, mad, neutral, peaceful, powerful, sad, scared)")) |> 
   as_data_frame()
 
 full_codebook

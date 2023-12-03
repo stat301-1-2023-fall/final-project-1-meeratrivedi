@@ -11,4 +11,4 @@ written_by,The writer(s) of the episode the text is from
 air-date,The first date the episode was available to watch in the US
 us_views_millions,The number of views the episode got in the US in millions
 imdb_rating,"The IMDB Rating of the episode (1 is worst, 10 is best)"
-emotion,The emotion the text was delivered with out of 7 emotions
+emotion,"The emotion the text was delivered with out of 7 emotions (joyful, mad, neutral, peaceful, powerful, sad, scared)"

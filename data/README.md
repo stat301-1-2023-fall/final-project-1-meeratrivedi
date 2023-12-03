@@ -29,4 +29,6 @@ The datasets are listed in the folder in alphabetical order.
 
 - `topguestlines.csv`: This is a subset of the `lines.csv` dataset containing only observations of the 10 speakers who are not the six main characters of the show who had the most lines.  
 
+- `full_codebook.csv`: This contains the name of each variable in the `lines_info_emotions.csv` dataset and an description of each. Since this dataset contains all variables used, it is a comprehensive overview of all the variables. 
+
 

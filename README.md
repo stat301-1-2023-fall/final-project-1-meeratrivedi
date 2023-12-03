@@ -11,7 +11,7 @@ This is what can be found in the repository:
 
 - `plots/`: This folder contains the graphs created for this analysis. They have all been saved to this folder as png images and are displayed in the final html file. 
 
-- Both progress memos are available in this repository
+- Both progress memos are available in this repository in addition to the final report.
 
 ### R Scripts
 
@@ -22,4 +22,6 @@ This is what can be found in the repository:
 - `03_univariate analyses`: This R Script contains all the code used to create the univariate analyses in this EDA. It is broken up into three sections: analyses primarily relating to Lines, Emotions, or Info. 
 
 - `04_multivariate analyses`: This R Script contains all the code used to create the multivariate analyses in this EDA. It is broken up into three sections: analyses primarily relating to Lines, Emotions, or Info.
+
+- `05_codebook`: This R Script contains all the code used to create the codebook that describes every variable.
 

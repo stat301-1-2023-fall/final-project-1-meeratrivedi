@@ -15,12 +15,13 @@ execute:
 from: markdown+emoji 
 ---
 
+![](image/friends_cartoon.jpeg){fig-align="center" width="314"}
+
 ::: {.callout-tip icon="false"}
 ## Github Repo Link
 
 [My GitHub Repo](https://github.com/stat301-1-2023-fall/final-project-1-meeratrivedi.git)
 :::
-
 
 ```{r}
 #| message: false
@@ -44,25 +45,27 @@ topguestlines <- read_csv("data/topguestlines.csv")
 
 ## Introduction
 
-This Exploratory Data Analysis will explore various data relating to the popular 90’s show Friends. I chose this data because I’ve watched every episode of Friends multiple times and I think the amount of observations in this data set will make for a lot of interesting relationships I could find between variables. The data consists of three datasets that I will be joining together and using individually to explore various types of data relating to the show, including the script details and numerical data about each episode. The first dataset is about the lines of every script, the second is about the emotions each line is delivered with, and the third includes identifying information about each episode and statistics about the success of each episode. The primary motivation for choosing this data and each analysis I’ve created is the curiosities I have had as a fan. The main thing I want to do is answer some of the questions I personally have been wondering since I came across this dataset, like which main character speaks the most, which guest character appears the most, did David Crane and Marta Kauffman write all the episodes, how many times does Janice really say “Oh My God” compared to the other characters, and which variables contribute to higher imdb ratings and views. It’s especially interesting since I have the number of US views of every single episode, which means after doing some data wrangling to create subsets of this data I could maybe see if the variables in my other two datasets have a correlation with the number of views. Then maybe I could say something about the contributors to the success of the show. As a fan of the show, there are a lot of different things I could do with this data. So, I do have a plan to find relationships of the success of the episodes, but I also just want to discover some fun things I’m curious about as a fan. 
+This Exploratory Data Analysis will explore various data relating to the popular 90's show *Friends*. I chose this data because I've watched every episode of *Friends* multiple times and I think the amount of observations in this data set can make for a lot of interesting relationships I could find between variables. The data consists of three datasets that I both joined together and used individually to explore various types of data relating to the show, including the script details and numerical data about each episode. The first dataset is about the lines of every script, the second is about the emotions each line is delivered with, and the third includes identifying information about each episode and statistics about the success of each episode. The primary motivation for choosing this data and each analysis I've created is the curiosities I have had as a fan. The main thing I want to do is answer some of the questions I personally have been wondering since I came across this dataset, like which main character speaks the most, which guest character appears the most, did David Crane and Marta Kauffman write all the episodes, and which variables contribute to higher imdb ratings and views. It's especially interesting since I have the number of US views of every single episode, which means after doing some data wrangling to create subsets of this data I could see if the variables in my other two datasets have a correlation with the number of views. Then I could possibly say something about the contributors to the success of the show. As a fan of the show, there are a lot of different things I could do with this data. I plan to find relationships between variables to make conclusions about the success of the episodes and the show, but I also just want to discover some fun things I'm curious about as a fan.
 
 ## Data Overview & Quality
 
-In my first dataset there are 67373 observations corresponding to details of every line in the show, including scene directions. This text variable and the speaker variable are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables have numerical values that correspond to categories, like season, episode and scene so I could potentially use pivoting functions to reorganize the dataset to make them categories instead of numbers. This hasn’t been relevant to my univariate analyses so far though. The utterance variable is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because some lines are heard from off-screen or by unnamed characters .
+In my first dataset there are 67373 observations corresponding to details of every line in the show, including scene directions. This text variable and the speaker variable are both listed as character variables, so they are categorical, even though most lines of text will not be repeated exactly so most of them are unique observations. The other four variables have numerical values that correspond to categories, like season, episode and scene. The utterance variable is also numerical. In this dataset there are many missing values for the speaker variable, which makes sense because some lines are heard from off-screen or by unnamed characters .
 
-In my second dataset there are 12606 observations corresponding to lines from scene 4 of the first episode until Season 4 Episode 24, including scene directions. There are 5 variables: 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable in this dataset, but since this data only encompasses part of the show and the other two datasets encompass the entire show, there are many missing values for emotion when joined. 
+In my second dataset there are 12606 observations corresponding to lines from scene 4 of the first episode until Season 4 Episode 24, including scene directions. There are 5 variables: 4 numerical variables that overlap with the first data set: season, episode, scene, and utterance, and then one last categorical variable that is the type of emotion the line is delivered with. There are 7 different categories for this variable: mad, neutral, joyful, scared, playful, powerful, and sad. There are no missing values for any variable in this dataset, but since this data only encompasses part of the show and the other two datasets encompass the entire show, there are many missing values for emotion when joined.
 
 In my third dataset there are 236 observations corresponding to every episode of the show and there are 8 variables: the season, the episode, the title of the episode, who directed it, who wrote it, the date it aired in the US, the number of views it got in the US in millions, and the IMDB rating. The season and episode variables are the same as the previous datasets, and the rest of the variables are categorical except for the views and the imdb rating, which are numerical. There are no missing values for any variable.
-
 
 ## Data Cleaning
 
 ### Joining Datasets
 
-I started out with three datasets with some overlapping variables that could act as compound keys to join the datasets. I called each dataset "lines", "emotions" and "info" respectively and will use those names to refer to them for the rest of this report. I first cleaned the lines dataset by removing the lines with missing values for "speaker" since those lines will not be relevant to my analyses. I then made multiple joined datasets: one joining lines and emotions, one joining lines and info, and one joining all three. I also made subsets of the lines dataset that I will be using in my analyses: one only including the six main characters and one including every character but them. Since I will be analyzing the main and side characters separately, this was necessary. All of these cleaned datasets are stored in the data sub-directory as csv files, and shown here is the first 10 rows of all three datasets combined together as an example:  
+I started out with three datasets with some overlapping variables that could act as compound keys to join the datasets. I called each dataset "lines", "emotions" and "info" respectively and will use those names to refer to them for the rest of this report. I first cleaned the lines dataset by removing the lines with missing values for "speaker" since those lines will not be relevant to my analyses. I then made multiple joined datasets: one joining lines and emotions, one joining lines and info, and one joining all three. I also made subsets of the lines dataset that I will be using in my analyses: one only including the six main characters and one including every character but them. Since I will be analyzing the main and side characters separately, this was necessary. All of these cleaned datasets as well as a codebook are stored in the data sub-directory as csv files, and shown here in @tbl-all is the first 10 rows of all three datasets combined together as an example:
 
 ```{r}
 #| message: false
+#| label: tbl-all
+
+
 triplejoindisplay <- head(lines_info_emotions, n=10) 
 
 triplejoindisplay |>
@@ -79,6 +82,7 @@ triplejoindisplay |>
 
 ## Lines
 
+I began by exploring the lines in this show for the main characters and guest characters.
 
 #### Lines Count - The Main Characters
 
@@ -94,20 +98,19 @@ Next I wanted to understand how the number of lines changed throughout the show 
 
 #### Lines Over Time - The Main Characters
 
-To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are much less though. And this analysis did confirm the theory I made earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
+To build on the previous analysis of Monica's lines, @fig-plot2 shows us the change in number of lines for all 6 main characters across the 10 seasons. We can see that each character has a different relationship between the season and the count of their lines which means there isn't really a way to predict who will have the most lines. It just depends on whose storyline is taking up more of the plot. But this analysis proves Crane & Kauffman right, that this is an ensemble and there is no real lead. I am surprised that Phoebe's lines are consistently much less though. And this analysis did confirm the theory I made earlier, that everyone's lines dropped in Season 10, probably because there were less episodes.
 
 ![Line Count - Main Characters](plots/line_by_season_maincharacters.png){#fig-plot2}
 
-
 #### Line Count - The Guest Characters
 
-@fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on Friends, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six Friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had. 
+@fig-bar2 answers my second biggest question: Who is the number 1 side character? This bargraph shows us the number of lines the side characters had throughout the show. Since there are hundreds of actors who got to appear on *Friends*, there are hundreds of characters and so this only displays the ten with the most lines. As you can see, Mike Hannigan had the most lines, and much more than the other side characters. This is not surprising because Mike is the only spouse not part of the six friends, and since he is married to one of them he appears quite a lot. I am surprised as to why Tag Jones made it into the top 10 because to me he is not a very memorable character, but I guess because he both dated and worked with Rachel, he appears more than other partners the friends have had.
 
 ![Line Count of the Guest Characters](plots/line_dist_guestcharacters.png){#fig-bar2}
 
 ## Writers & Directors
 
-Next I decided to explore the data about the episodes of Friends and how they differ between the writers and directors of the show. 
+Next I decided to explore the data about the episodes of Friends and how they differ between the writers and directors of the show.
 
 #### Writers: Lines and Episodes
 
@@ -140,13 +143,13 @@ writers_episodes |>
 
 #### Writers
 
-@fig-bar4 next shows the data in the table visually as it explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes. 
+@fig-bar4 next shows the data in the table visually as it explores the writers and the number of episodes they have written. There were many writers so this bargraph only displays the 11 writers who wrote the most episodes. I believed the top writer team would be David Crane & Marta Kauffman since they created the show but it was actually Alexa Junge and Reich & Cohen, who I have never heard of. It is surprising that the most recurring writers only wrote 11 episodes, but it turns out that there are many writers who only wrote 1 or a few episodes.
 
 ![Episode Writers](plots/info_dist_topwriters.png){#fig-bar4}
 
 #### Directors: Lines and Episodes
 
-Next I explored the same data but for the directors. Since I only really remember James Burrows and Kevin S. Bright's names appearing on the screen at the end of most episodes, I thought they were the primary director, but I was wrong! Gary Halvorson actually directed more episodes than both of them, and much more than James Burrows. After some research, I realized that the names on the screen at the end of each episode are the producers, and do not necessarily mean those people were the primary writers or directors of the show. I was also surprised to see that David Schwimmer directed 10 episodes in addition to playing Ross Geller, a main character! The final thing that was interesting to me was how the top directors directed many more episodes than the top writers did. The most episodes attributed to one writer is 11, whereas the most episodes attributed to one director is 54. 
+Next I explored the same data but for the directors. Since I only really remember James Burrows and Kevin S. Bright's names appearing on the screen at the end of most episodes, I thought they were the primary director, but I was wrong! Gary Halvorson actually directed more episodes than both of them, and much more than James Burrows. After some research, I realized that the names on the screen at the end of each episode are the producers, and do not necessarily mean those people were the primary writers or directors of the show. I was also surprised to see that David Schwimmer directed 10 episodes in addition to playing Ross Geller, a main character! The final thing that was interesting to me was how the top directors directed many more episodes than the top writers did. The most episodes attributed to one writer is 11, whereas the most episodes attributed to one director is 54.
 
 ```{r}
 #| message: false
@@ -175,7 +178,7 @@ directors_episodes |>
 
 #### Directors
 
-@fig-bar5 next shows the data in the table visually as it explores the directors and the number of episodes they have directed. Like writers, there were many directors so this bargraph only displays the 10 directors who wrote the most episodes. I was surprised that the top two directors directed way more episodes than the other 8 directors in this top 10. 
+@fig-bar5 next shows the data in the table visually as it explores the directors and the number of episodes they have directed. Like writers, there were many directors so this bargraph only displays the 10 directors who wrote the most episodes. I was surprised that the top two directors directed way more episodes than the other 8 directors in this top 10.
 
 ![Episode Directors](plots/info_dist_topdirectors.png){#fig-bar5}
 
@@ -191,7 +194,7 @@ Next I decided to explore the two measures of popularity of an episode: Views an
 
 #### IMDB Ratings and Views
 
-To begin this analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of Friends. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show? 
+To begin this analysis I explored the average IMDB rating per episode and average number of views (in millions) per episode for each season of *Friends*. These numbers can be used as measures to show popularity or success of each season of the show. An IMDB rating is a rating out of 10 derived from votes submitted by IMDb users. 1 would mean they hate the show, 10 would mean they love it! It's a good metric to measure success. Views more clearly represent popularity, as it is a numerical representation of traction gained with an audience. Season 10 has the highest IMDB rating, which may or may not be surprising, that's subjective. I think since it wraps up the show there is more resolution which may be why voters liked it more. I am surprised by Season 2 having the most number of views though. In my opinion, nothing really major happens in Season 2 that would warrant more popularity. Perhaps it has something to do with the availability of the show?
 
 ```{r}
 info |> 
@@ -220,19 +223,19 @@ Next I decided to explore each measure of popularity separately. First, I looked
 
 #### Views in the United States
 
-Next, I decided to explore views. This plot shows the average number of views each episode got per year to show how views have changed over time, not necessarily per season. Views first peaked after two years of the show running in 1996 and then greatly decreased and increased again, peaking again in the final year of the show in 2004. So using views as a measure of popularity, on average the show was most popular in its 3rd and 10th year, and least popular as it was starting. Still though, at least around 20 million views per year is impressive. 
+Next, I decided to explore views. This plot shows the average number of views each episode got per year to show how views have changed over time, not necessarily per season. Views first peaked after two years of the show running in 1996 and then greatly decreased and increased again, peaking again in the final year of the show in 2004. So using views as a measure of popularity, on average the show was most popular in its 3rd and 10th year, and least popular as it was starting. Still though, at least around 20 million views per year is impressive.
 
 ![Views Over Time](plots/views_over_time.png){#fig-plot5}
 
 #### Measures of Episode Popularity
 
-Next I had to see if there was a relationship between these measures of popularity, is a high viewing indicative of a high rating or vice versa? I thought this would be true, that there would be a positive relationship because I think if an episode was worthy of a high rating it would garner more views because people would share it. I did think the relationship would be stronger but as I predicted it is clearly positive. Most episodes got between 20 and 30 million views and all had very high IMDB ratings which is high for both metrics, it just doesn't look like that in this zoomed-in scatterplot because there was not a wide range of views or ratings. This shows how consistently well Friends performed in both metrics of popularity. 
+Next I had to see if there was a relationship between these measures of popularity, is a high viewing indicative of a high rating or vice versa? I thought this would be true, that there would be a positive relationship because I think if an episode was worthy of a high rating it would garner more views because people would share it. I did think the relationship would be stronger but as I predicted it is clearly positive. Most episodes got between 20 and 30 million views and all had very high IMDB ratings which is high for both metrics, it just doesn't look like that in this zoomed-in scatterplot because there was not a wide range of views or ratings. This shows how consistently well Friends performed in both metrics of popularity.
 
 ![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
 
 #### Audiences Favorite Episode
 
-Because Friends consistently got many views and was consistently rated high, I decided to see if the episodes with the most views are the episodes with the highest rating, to see if these measures are really consistent with each other. These tables show the 5 episodes with the most views and the 5 episodes with the highest IMDB ratings, and it shows that there is only one episode in both top 5 categories: The Last One. This makes sense, as it is the series finale. I was surprised to see that out of the top 5 episodes, the episodes that were broken into two episodes, the first being a Part 1 and the second being a Part 2, appeared in both of these tables, especially in the views table. I guess since two part episodes have a longer story, maybe it is more interesting and people watch it more? I was, however, not surprised that the episode with the highest IMDB rating, other than The Last One, is The One Where Everybody Finds Out, because it has one of the biggest plot reveals of the show. 
+Because Friends consistently got many views and was consistently rated high, I decided to see if the episodes with the most views are the episodes with the highest rating, to see if these measures are really consistent with each other. These tables show the 5 episodes with the most views and the 5 episodes with the highest IMDB ratings, and it shows that there is only one episode in both top 5 categories: *The Last One*. This makes sense, as it is the series finale. I was surprised to see that out of the top 5 episodes, the episodes that were broken into two episodes, the first being a Part 1 and the second being a Part 2, appeared in both of these tables, especially in the views table. I guess since two part episodes have a longer story, maybe it is more interesting and people watch it more? I was, however, not surprised that the episode with the highest IMDB rating, other than *The Last One*, is *The One Where Everybody Finds Out*, because it has one of the biggest plot reveals of the show.
 
 ```{r}
 #top 5 episodes by views
@@ -272,19 +275,19 @@ top5imdb
 
 ## Emotions
 
-Finally, I explored the emotions variable and how it relates to the other variables in the combined dataset. 
+Finally, I explored the emotions variable and how it relates to the other variables in the combined dataset.
 
 #### Emotions
 
-@fig-bar3 first visualizes the count of lines delivered with each of 7 different emotions on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of "*Friends*" is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.  
+@fig-bar3 first visualizes the count of lines delivered with each of 7 different emotions on the show. This variable only has data for the first 4 seasons and has many missing values within that so this data does not nearly encompass the entire show but is still interesting nonetheless. As you can see, most of the lines delivered are delivered neutrally, which is not surprising given two things: one, that most of *Friends* is just normal conversation between friends, and two, that sarcastic lines were coded as neutral, which as fans know, Chandler has a lot of.
 
 ![Count of Lines by Emotion](plots/emotions_count.png){#fig-bar3}
 
 #### Main Character Emotions
 
-@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second. 
+@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second.
 
-![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar4}
+![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png)
 
 #### Audiences Favorite Emotion
 
@@ -312,7 +315,6 @@ lines_info_emotions |>
     decimals = 2)
 ```
 
-
 @fig-box2 builds on this by showing the distribution of views and ratings for each emotion; however, they are pretty similar. The spreads are slightly different sizes but all have very similar medians, and because the metrics of popularity correspond to episodes, episodes that are outliers appear for each emotion when there are lines of every emotion in that episode. This plot was constructed to see if the similar averages were reflective of similar distributions, and this is now true, but probably because of the level of missingness.
 
 ![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box2}
@@ -326,28 +328,29 @@ lines_info_emotions_wmissingness <- lines_info |>
   relocate(emotion, us_views_millions, imdb_rating, air_date, written_by, directed_by, title, speaker, season, episode, scene, utterance, text)
 vis_miss(lines_info_emotions_wmissingness)
 ```
-The emotions variable is missing values for 79% of the lines in this show, which is a lot, and might partially explain the similar distributions.
+
+This visualized missingness summary shows that the emotions variable is missing values for 79% of the lines in this show, which is a lot, and might partially explain the similar distributions.
 
 ## Conclusion
 
-conclusion
+In conclusion, *Friends* was an incredibly successful show, consistently getting millions of views and high ratings. Over time the IMDB rating distribution started to skew slightly more left showing the show was getting higher ratings slightly more frequently over time, which shows improvement, but views fluctuated a lot and thus cannot be predicted with time. These two metrics of popularity had a positive relationship with each other, which makes sense, but it doesn't look like a strong relationship visually because of how consistently well the show was doing and how small the ranges of values for both metrics were. Even zooming in on the top right values of the scatterplot that shows this does not show one clear "best", "most popular" episode. The only overlap between the top 5 ratings and views is the series finale. Out of the top 5 of each, that is the only episode that appeared in both, which means we could conclude that it is the most popular episode.
+
+Overall, everyone's lines fluctuated throughout but Monica, Ross, and Rachel consistently had more lines than Phoebe, which I found odd since she is such a prominent character. However, after exploring the emotions variable, I learned not to make conclusions about star quality this way. It was hard to make conclusions with so much missingness but even though it seems like because Rachel and Ross have many more lines that they stand out more, everyone has an almost equal chance to show off their emotional range as actors. As someone with acting experience, that is more valuable than a line count in terms of star quality. Also, the most recurring guest characters are people who dated one of the main characters for an extended period of time, which makes sense, since partners would be the people most involved in the main character's lives.
+
+I also learned a lot about television throughout this analysis. I learned that being a producer does not equate to writing or directing more than anyone else, as shown by the fact that the three original producers: Marta Kauffman, David Crane, and Kevin S. Bright did not write or direct more than anyone else they brought on. Television shows involve much more collaboration and bringing in different talent than I thought; I never realized how many different people got the opportunity to write and direct on this show. Out of the top 3 directors, Gary Halvorson directed the most but his episodes generally got less views than the other two top directors. Out of the top 3 writers, Alexa Junge wrote the most and more of her episodes got in the higher end of the range of views than the other two top writing teams.
+
+If I were to continue exploring this dataset, I would want to continue exploring every variable I could and its relationship with ratings and views to see how more things relate to success, and I'd also want to learn more about the two-part episodes. I want to know if every two-part episode got the exact same number of views because no significant number of people watched only one of them, or if possibly the views were summed and then averaged between the two. I also want to know how views were coded, since I know many clips of *Friends* are available on free viewing platforms like Youtube, TikTok, and Instagram, and that people still watch the show today, so views are still increasing. I would want to be able to do a recollection of views and reanalyze everything since I believe the numbers would greatly increase.
 
 ## Reference
 
-::: {.callout-tip icon=false}
+::: {.callout-tip icon="false"}
+## Data Source
 
-## Data Link
-
-[https://www.kaggle.com/datasets/sujaykapadnis/friends/](https://www.kaggle.com/datasets/sujaykapadnis/friends/)
-
+Kapadnis, Sujay. (2023, Oct. 23). *Friends Sitcom Dataset*. Kaggle. [www.kaggle.com/datasets/sujaykapadnis/friends/.](www.kaggle.com/datasets/sujaykapadnis/friends/.)
 :::
 
-## Appendix 
+## Appendix
 
 This is the same exploration as the faceted side-by-side boxplot graph of episode views by season for the top 3 directors and writers, but in the form of a faceted scatterplot. This is because I thought it might be useful or interesting to see the different points that represent each episode stacked on top of each other to represent multiple episodes written/directed in one season. Ideally, scatterplots don't have points lying on top of each other but in this case I thought it was interesting to see points lined up vertically by season to easily see each observation.
 
 ![Top Directors and Writers](plots/directors_writers_plot.png){#fig-plot4}
-
-
-
-
