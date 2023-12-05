@@ -232,7 +232,7 @@ ggsave("plots/views_over_time.png")
 
 
 #imdb density per season -----
-info |> 
+density1 <- info |> 
   mutate(release_year = year(air_date), 
          season = factor(season)) |> 
   group_by(season) |> 
@@ -249,6 +249,27 @@ info |>
         axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"),
         axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"), 
         legend.title = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+density2 <- info |> 
+  mutate(release_year = year(air_date), 
+         season = factor(season)) |> 
+  group_by(season) |> 
+  filter(season %in% c("6":"10")) |> 
+  ggplot(aes(x = imdb_rating, color = season, fill = season))+ 
+  geom_density(alpha = 0.1) + 
+  scale_x_continuous(breaks = seq(7, 10, 0.5)) +
+  labs(title = "Density of IMDB Ratings per Season", 
+       subtitle = "Distribution of the Episode IMDB ratings for each of the last 5 seasons.", 
+       x = "IMDB Rating (Out of 10)", y = NULL, color = "Season", fill = "Season") +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 15, face = "bold"), 
+        plot.subtitle = element_text(hjust = 0.5, size = 10), 
+        axis.title.x = element_text(hjust = 0.5, size = 10, face = "bold"),
+        axis.title.y = element_text(hjust = 0.5, size = 10, face = "bold"), 
+        legend.title = element_text(hjust = 0.5, size = 10, face = "bold"))
+
+library(patchwork)
+density1 + density2
 
 ggsave("plots/imdb_density.png") 
 

@@ -23,12 +23,11 @@ This folder contains the plots used in this analysis. They appear in the folder 
 
 - `directors_writers_box.png`: This faceted side-by-side boxplot diagram shows the distribution of episode views per season for both the writers and directors.
 
-- `imdb_density.png`: This density plot shows the frequency of IMDB ratings per episode for the first 5 seasons of the show.
+- `imdb_density.png`: This density plot shows the frequency of IMDB ratings per episode for the first 5 seasons of the show and the last 5 seasons of the show side-by-side.
 
 - `views_over_time.png`: This scatterplot shows the average number of views each episode got per year to show how views have changed over time. 
 
 - `imdb_by_views.png`: This scatterplot shows the relationship between IMDB ratings and views. 
-
 - `emotions_count.png`: This bar graph shows the number of lines that were delivered on the show with each of 7 different emotions (joyful, mad, neutral, peaceful, powerful, sad, scared).
 
 - `emotions_count_maincharacters.png`: This faceted bar graph shows the number of lines that were delivered on the show with each of 7 different emotions (joyful, mad, neutral, peaceful, powerful, sad, scared) for each of the main characters.

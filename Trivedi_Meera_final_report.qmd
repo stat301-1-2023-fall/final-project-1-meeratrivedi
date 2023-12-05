@@ -84,7 +84,7 @@ I began by exploring the lines in this show for the main characters and guest ch
 
 #### Lines Count - The Main Characters
 
-@fig-bar1 answers my biggest question: Who has the most lines? David Crane & Marta Kauffman as well as the stars of the show have always said in interviews that the show was designed to have the six of them be an ensemble: six equal co-stars with no lead. However, someone has to have the most lines. This bar graph shows us the number of lines each of the six main characters had throughout the show, and as you can see, Rachel Green had the most lines, and almost 200 more than Phoebe Buffay, who had the least number of lines. This doesn't make her the lead, but it is interesting.
+@fig-bar1 answers my biggest question: Who has the most lines? David Crane & Marta Kauffman as well as the stars of the show have said in interviews (one recent one is cited in the References section) that the show was designed to have the six of them be an ensemble: six equal co-stars with no lead. However, someone has to have the most lines. This bar graph shows us the number of lines each of the six main characters had throughout the show, and as you can see, Rachel Green had the most lines, and almost 200 more than Phoebe Buffay, who had the least number of lines. This doesn't make her the lead, but it is interesting.
 
 ![Line Count of the Six Main Characters](plots/line_dist_maincharacters.png){#fig-bar1}
 
@@ -182,7 +182,7 @@ directors_episodes |>
 
 #### Views - Top Directors and Writers
 
-Finally, I thought it would be interesting to look at the distribution of episode views per season and compare the results for the writers and directors. To do this, I chose the three writers and directors who wrote and directed the most episodes. We know from previous analyses that Gary Halvorson directed the most episodes, but this shows that he didn't direct until the fourth season, whereas Kevin S. Bright directed at least one episode per season but still directed far less than Halvorson. Both of these directors had their episodes get a wide range of views, with each season having a different distributions of views. For insance in Season 10, Kevin's episodes got a very wide range of views but with a relatively low median. The flat lines represent a singular episode. Also, considering the distribution of views for Alexa's episodes were shifted vertically higher in relation to the other writers, her episodes generally got more views. That could be a reflection of her writing skills?
+Finally, I thought it would be interesting to look at the distribution of episode views per season and compare the results for the writers and directors. To do this, I chose the three writers and directors who wrote and directed the most episodes. We know from previous analyses that Gary Halvorson directed the most episodes, but @fig-box1 shows that he didn't direct until the fourth season, whereas Kevin S. Bright directed at least one episode per season but still directed far less than Halvorson. Both of these directors had their episodes get a wide range of views, with each season having a different distributions of views. For insance in Season 10, Kevin's episodes got a very wide range of views but with a relatively low median. The flat lines represent a singular episode. Also, considering the distribution of views for Alexa's episodes were shifted vertically higher in relation to the other writers, her episodes generally got more views. That could be a reflection of her writing skills?
 
 ![Top Directors and Writers](plots/directors_writers_box.png){#fig-box1}
 
@@ -215,19 +215,20 @@ info |>
 
 #### IMDB Ratings
 
-Next I decided to explore each measure of popularity separately. First, I looked at the frequency of IMDB ratings for the first 5 seasons. I wanted to get a sense of how much people like the show, but am only showing the first 5 seasons because 10 different overlapping lines would be too much. Considering the only available range of IMDB rating values was from 7-10, this was an incredibly successful show. Never having an IMDB rating below 7 is quite impressive. That being said, each season had a similar distribution of frequency, with most episodes ranking between 8 and 8.5.
+Next I decided to explore each measure of popularity separately. @fig-density1 shows the frequency of IMDB ratings for all 10 seasons. I wanted to get a sense of how much people like the show, but am showing the first 5 seasons and the last 5 seasons separately because 10 different overlapping lines would be too much. Considering the only available range of IMDB rating values was from 7-10, this was an incredibly successful show. Never having an IMDB rating below 7 is quite impressive. That being said, each season had a similar distribution of frequency, with most episodes ranking between 8 and 8.5. In the first plot, it shows that over time the frequency of a rating of 8 decreased and the distribution started to skew more left, which shows gradual improvement over time and a higher frequency of better ratings. The last 5 seasons have differing distributions and do not show this pattern, but have a higher frequency of a wider range of views, from 8 to 9. 
 
 ![IMDB Density](plots/imdb_density.png){#fig-density1}
 
+
 #### Views in the United States
 
-Next, I decided to explore views. This plot shows the average number of views each episode got per year to show how views have changed over time, not necessarily per season. Views first peaked after two years of the show running in 1996 and then greatly decreased and increased again, peaking again in the final year of the show in 2004. So using views as a measure of popularity, on average the show was most popular in its 3rd and 10th year, and least popular as it was starting. Still though, at least around 20 million views per year is impressive.
+Next, I decided to explore views. @fig-plot5 shows the average number of views each episode got per year to show how views have changed over time, not necessarily per season. Views first peaked after two years of the show running in 1996 and then greatly decreased and increased again, peaking again in the final year of the show in 2004. So using views as a measure of popularity, on average the show was most popular in its 3rd and 10th year, and least popular as it was starting. Still though, at least around 20 million views per year is impressive.
 
 ![Views Over Time](plots/views_over_time.png){#fig-plot5}
 
 #### Measures of Episode Popularity
 
-Next I had to see if there was a relationship between these measures of popularity, is a high viewing indicative of a high rating or vice versa? I thought this would be true, that there would be a positive relationship because I think if an episode was worthy of a high rating it would garner more views because people would share it. I did think the relationship would be stronger but as I predicted it is clearly positive. Most episodes got between 20 and 30 million views and all had very high IMDB ratings which is high for both metrics, it just doesn't look like that in this zoomed-in scatterplot because there was not a wide range of views or ratings. This shows how consistently well Friends performed in both metrics of popularity.
+Next I had to see if there was a relationship between these measures of popularity, is a high viewing indicative of a high rating or vice versa? This is explored in @fig-plot3. I thought this would be true, that there would be a positive relationship because I think if an episode was worthy of a high rating it would garner more views because people would share it. I did think the relationship would be stronger but as I predicted it is clearly positive. Most episodes got between 20 and 30 million views and all had very high IMDB ratings which is high for both metrics, it just doesn't look like that in this zoomed-in scatterplot because there was not a wide range of views or ratings. This shows how consistently well Friends performed in both metrics of popularity.
 
 ![IMDB Rating by Millions of Views](plots/imdb_by_views.png){#fig-plot3}
 
@@ -285,7 +286,7 @@ Finally, I explored the emotions variable and how it relates to the other variab
 
 @fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second.
 
-![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png)
+![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar4}
 
 #### Audiences Favorite Emotion
 
@@ -315,7 +316,7 @@ lines_info_emotions |>
 
 @fig-box2 builds on this by showing the distribution of views and ratings for each emotion; however, they are pretty similar. The spreads are slightly different sizes but all have very similar medians, and because the metrics of popularity correspond to episodes, episodes that are outliers appear for each emotion when there are lines of every emotion in that episode. This plot was constructed to see if the similar averages were reflective of similar distributions, and this is now true, but probably because of the level of missingness.
 
-![Distribution Boxplots](plots/views_ratings_by_emotion.png){#fig-box2}
+![Views vs Ratings Emotion Boxplots](plots/views_ratings_by_emotion.png){#fig-box2}
 
 ```{r}
 #| message: false
@@ -350,7 +351,7 @@ Kapadnis, Sujay. (2023, Oct. 23). *Friends Sitcom Dataset*. Kaggle. [www.kaggle.
 ::: {.callout-tip icon="false"}
 ## Interview with David Crane and Marta Kauffman
 
-Byrne, Suzy. (2023, Nov. 3). *‘There Are No Stars Here’: How the ‘friends’ Cast Bonded When the Show Began - and Became ‘a Family.*. Yahoo!. [www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html] (www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html)
+Byrne, Suzy. (2023, Nov. 3). *‘There Are No Stars Here’: How the ‘friends’ Cast Bonded When the Show Began - and Became ‘a Family.* Yahoo!. [www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html](www.yahoo.com/entertainment/friends-cast-bond-friendship-on-off-screen-matthew-perry-163946293.html)
 :::
 
 ## Appendix

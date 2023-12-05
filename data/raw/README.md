@@ -5,7 +5,13 @@ This repository is for an analysis of data collected on the popular 90s TV show:
 
 ## What is in the Raw Data Folder
 
-This folder contains the raw data used in this analysis in the form of csv files. They were downloaded from Kaggle, via this link: [https://www.kaggle.com/datasets/sujaykapadnis/friends/](https://www.kaggle.com/datasets/sujaykapadnis/friends/)
+This folder contains the raw data used in this analysis in the form of csv files. They were downloaded from Kaggle, via this link: 
+
+::: {.callout-tip icon="false"}
+## Data Source
+
+Kapadnis, Sujay. (2023, Oct. 23). *Friends Sitcom Dataset*. Kaggle. [www.kaggle.com/datasets/sujaykapadnis/friends/.](www.kaggle.com/datasets/sujaykapadnis/friends/.)
+:::
 
 The datasets in the main section of the data folder are derived from this raw data and have been cleaned and stored as new datasets in the form of csv files. 
 
