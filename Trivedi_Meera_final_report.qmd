@@ -284,9 +284,9 @@ Finally, I explored the emotions variable and how it relates to the other variab
 
 #### Main Character Emotions
 
-@fig-bar4 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second.
+@fig-bar6 further explores the emotions of the lines delivered on the show by breaking it down by character. Again, this emotion variable only has data for the first 4 seasons and has many missing values within that, but it is still interesting to see the breakdown for each character. All 6 main characters get to show all 7 emotions throughout the first four seasons and their count of each emotion is pretty similar for each emotion. This aligns with the intention presented by the producers to give all 6 characters equal costar status; a way to measure star quality is proficiency in acting, which as a former theater student in high school I can say is shown by showing a range of ability. All 6 main characters get to do that on a similar level for each emotion. And as I suspected from discovering that sarcasm was coded as "neutral", Chandler does have much more neutral lines than most of the other characters, with Ross as a relatively closer second.
 
-![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar4}
+![Count of Lines by Emotion for the Main Characters](plots/emotions_count_maincharacters.png){#fig-bar6}
 
 #### Audiences Favorite Emotion
 
